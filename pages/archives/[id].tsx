@@ -9,6 +9,7 @@ import Prism from '../../public/js/prism.js';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
 import { editArchive, deleteArchive } from '../../lib/archive';
+import { stringify } from 'postcss';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
@@ -32,6 +33,7 @@ export default function Content({
   });
 
   const [n, setN] = useState(45);
+  const [s, setS] = useState('45');
 
   const [response, setResponse] = useState({
     type: '',
@@ -224,7 +226,8 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`pa h-${(n as unknown) as string}`}>
+            <div className={`pa h-${'45'}`}>
+              <p>{typeof n}</p>
               <p>{n}</p>
               <div className="w-full">
                 <pre>
@@ -240,9 +243,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea absolute h-${String(
-                      n
-                    )} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                    className={`codeArea absolute h-${'45'} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
