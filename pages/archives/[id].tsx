@@ -224,7 +224,7 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`pa h-${String(n)}`}>
+            <div className={`pa h-${(n as unknown) as string}`}>
               <p>{n}</p>
               <div className="w-full">
                 <pre>
