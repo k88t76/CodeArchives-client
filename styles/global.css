@@ -1,15 +1,38 @@
+@tailwind base;
+@tailwind components;
+
+.btn {
+  @apply box-border bg-gray-200 outline-none cursor-pointer flex self-center text-xl font-bold rounded-lg
+         p-0.5 w-40 text-center items-center justify-center text-black bg-gradient-to-bl from-gray-300
+       hover:bg-gray-50;
+}
+
+.header {
+  @apply flex items-center justify-between bg-blue-600 text-white pr-8 pl-3 fixed z-40 w-full h-10;
+}
+
+.logo {
+  @apply font-extrabold text-white w-48 text-2xl flex;
+}
+
+.content {
+  @apply pt-12 px-5;
+}
+
+.container {
+  @apply block w-80 max-h-48 m-3 text-xs z-0 overflow-y-scroll hover:transform hover:-translate-y-1 hover:cursor-pointer;
+}
+
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 a {
@@ -17,11 +40,36 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 img {
   max-width: 100%;
   display: block;
+}
+
+.container {
+  border-left: 10px solid #358ccb;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.codeArea {
+  border-left: 10px solid #358ccb;
+  caret-color: black;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+}
+
+.pa {
+  background-color: #fdfdfd;
+  background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
+  background-size: 3em 3em;
+  background-origin: content-box;
+  background-attachment: local;
 }
