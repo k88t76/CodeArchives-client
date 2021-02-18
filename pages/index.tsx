@@ -12,10 +12,15 @@ import { Archive, fetchArchives } from '../lib/archive';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
+interface ResponseState {
+  type?: string;
+  message: string | string[];
+}
+
 export default function Home({ data, token }: { data: Archive[]; token: string }) {
   const [archives, setArchives] = useState(data);
 
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
   });

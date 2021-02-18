@@ -43,20 +43,20 @@ export default function AddArchive({ name }: { name: string }) {
     }
   };
   const handleLanguage = () => {
-    const lan = document.getElementById('language').value;
+    const lan = (document.getElementById('language') as HTMLSelectElement).value;
     setArchive({
       content: archive.content,
       title: archive.title,
       author: archive.author,
       language: lan,
     });
-    const target = document.getElementById('code');
+    const target = document.getElementById('code') as HTMLDivElement;
     target.className = 'language-' + lan;
     Prism.highlightAll();
   };
 
   const handleKeydown = (e) => {
-    var textarea = document.getElementById('textarea');
+    var textarea = document.getElementById('textarea') as HTMLTextAreaElement;
     if (e.keyCode === 9) {
       e.preventDefault();
       const pos = textarea.selectionStart;
@@ -71,7 +71,7 @@ export default function AddArchive({ name }: { name: string }) {
       textarea.focus();
       textarea.setSelectionRange(pos + 1, pos + 1);
     }
-    var txt = document.getElementById('textarea').value;
+    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
@@ -81,7 +81,7 @@ export default function AddArchive({ name }: { name: string }) {
   };
 
   const handleFocus = () => {
-    var txt = document.getElementById('textarea').value;
+    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
