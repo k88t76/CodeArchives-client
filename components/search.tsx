@@ -25,7 +25,7 @@ export default function Search({
 
   const cancelSearch = async (e) => {
     e.preventDefault();
-    var textForm = document.getElementById('form1');
+    var textForm = <HTMLInputElement>document.getElementById('form1');
     textForm.value = '';
     const data = await fetchArchives(token);
     setArchives(data);

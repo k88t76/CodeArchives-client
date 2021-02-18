@@ -66,20 +66,20 @@ export default function Content({
   };
 
   const handleLanguage = () => {
-    const lan = document.getElementById('language').value;
+    const lan = (<HTMLInputElement>document.getElementById('language')).value;
     setArchive({
       content: archive.content,
       title: archive.title,
       author: archive.author,
       language: lan,
     });
-    const target = document.getElementById('code');
+    const target = <HTMLInputElement>document.getElementById('code');
     target.className = 'language-' + lan;
     Prism.highlightAll();
   };
 
   const handleKeydown = (e) => {
-    var textarea = document.getElementById('textarea');
+    var textarea = <HTMLInputElement>document.getElementById('textarea');
     if (e.keyCode === 9) {
       e.preventDefault();
       const pos = textarea.selectionStart;
@@ -94,7 +94,7 @@ export default function Content({
       textarea.focus();
       textarea.setSelectionRange(pos + 1, pos + 1);
     }
-    var txt = document.getElementById('textarea').value;
+    var txt = (<HTMLInputElement>document.getElementById('textarea')).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
@@ -104,7 +104,7 @@ export default function Content({
   };
 
   const handleFocus = () => {
-    var txt = document.getElementById('textarea').value;
+    var txt = (<HTMLInputElement>document.getElementById('textarea')).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
@@ -121,7 +121,7 @@ export default function Content({
 
   const handleSetSelected = () => {
     if (archive.language) {
-      document.getElementById(`${archive.language}`).selected = true;
+      (<HTMLInputElement>document.getElementById(`${archive.language}`)).selected = true;
     }
   };
 
