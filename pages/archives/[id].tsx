@@ -271,5 +271,5 @@ export async function getStaticProps({ params }) {
   const id = params.id;
   const res = await fetch(`${url}/archive/${id}`);
   const data = await res.json();
-  return { props: { data, id }, revalidate: 1 };
+  return { props: { data, id }, revalidate: 60 };
 }
