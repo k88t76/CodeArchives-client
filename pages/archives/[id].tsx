@@ -100,7 +100,8 @@ export default function Content({
     if (lines > 33) {
       if (lines % 2 === 1) {
         const num = (3 * (lines - 33)) / 2 + 54;
-        setN(`h-${String(num)}`);
+        const s = 'h-' + String(num);
+        setN(s);
       }
     }
   };
@@ -111,7 +112,8 @@ export default function Content({
     if (lines > 33) {
       if (lines % 2 === 1) {
         const num = (3 * (lines - 33)) / 2 + 54;
-        setN(`h-${String(num)}`);
+        const s = 'h-' + String(num);
+        setN(s);
       }
     }
   };
