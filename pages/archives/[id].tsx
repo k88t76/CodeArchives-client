@@ -33,7 +33,7 @@ export default function Content({
   });
 
   const [n, setN] = useState(45);
-  const [s, setS] = useState(`h-${String(45)}`);
+  const [s, setS] = useState(`h-${(45 as unknown) as string}`);
 
   const [response, setResponse] = useState({
     type: '',
