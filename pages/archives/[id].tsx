@@ -225,6 +225,7 @@ export default function Content({
             </div>
 
             <div className={`pa h-${String(n)}`}>
+              <p>{n}</p>
               <div className="w-full">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
