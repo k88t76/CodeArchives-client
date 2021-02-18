@@ -226,7 +226,7 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`pa h-${'45'}`}>
+            <div className={`pa h-45`}>
               <p>{typeof n}</p>
               <p>{n}</p>
               <div className="w-full">
@@ -243,7 +243,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea absolute h-${'45'} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                    className={`codeArea absolute h-45 top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
