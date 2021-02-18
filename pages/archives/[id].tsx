@@ -32,8 +32,7 @@ export default function Content({
     language: data && data.language,
   });
 
-  const [n, setN] = useState(45);
-  const [s, setS] = useState('h-45');
+  const [n, setN] = useState('h-45');
 
   const [response, setResponse] = useState({
     type: '',
@@ -100,7 +99,8 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
+        const num = (3 * (lines - 33)) / 2 + 54;
+        setN(`h-${String(num)}`);
       }
     }
   };
@@ -110,7 +110,8 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
+        const num = (3 * (lines - 33)) / 2 + 54;
+        setN(`h-${String(num)}`);
       }
     }
   };
@@ -226,7 +227,7 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`pa ${s}`}>
+            <div className={`pa ${n}`}>
               <p>{typeof n}</p>
               <p>{n}</p>
               <div className="w-full">
@@ -243,7 +244,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea absolute ${s} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                    className={`codeArea absolute ${n} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
