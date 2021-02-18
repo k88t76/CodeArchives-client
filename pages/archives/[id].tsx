@@ -113,7 +113,8 @@ export default function Content({
       if (lines % 2 === 1) {
         const num = (3 * (lines - 33)) / 2 + 54;
         const s = 'h-' + String(num);
-        setN(s);
+        const tt = `codeArea absolute ${num} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`;
+        setN(tt);
       }
     }
   };
@@ -246,7 +247,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea absolute ${n} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                    className={n}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
