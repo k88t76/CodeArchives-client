@@ -23,6 +23,10 @@
   @apply block w-80 max-h-48 m-3 text-xs z-0 overflow-y-scroll hover:transform hover:-translate-y-1 hover:cursor-pointer;
 }
 
+.codeArea {
+  @apply absolute top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden;
+}
+
 @tailwind utilities;
 
 html,
@@ -66,7 +70,7 @@ img {
   line-height: 1.5;
 }
 
-.pa {
+.code {
   background-color: #fdfdfd;
   background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
   background-size: 3em 3em;

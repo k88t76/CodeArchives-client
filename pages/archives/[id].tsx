@@ -32,8 +32,8 @@ export default function Content({
     language: data && data.language,
   });
 
-  const [n, setN] = useState(45);
-  const [s, setS] = useState('h-' + String(45 as unknown));
+  const [n, setN] = useState(42);
+  const [s, setS] = useState<string>(String(n));
 
   const [response, setResponse] = useState({
     type: '',
@@ -100,7 +100,10 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
+        setN((3 * (lines - 33)) / 2 + 51);
+        setS(String(n));
+        const target = document.getElementById('textarea') as HTMLTextAreaElement;
+        target.className = 'codeArea h-' + s;
       }
     }
   };
@@ -110,7 +113,10 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
+        setN((3 * (lines - 33)) / 2 + 51);
+        setS(String(n));
+        const target = document.getElementById('textarea') as HTMLTextAreaElement;
+        target.className = 'codeArea h-' + s;
       }
     }
   };
@@ -140,7 +146,7 @@ export default function Content({
       <header className="header">
         <HeaderLogin />
       </header>
-      <div className="pt-24 px-5">
+      <div onLoad={handleFocus} className="pt-24 px-5">
         {!data && (
           <div>
             <div>This Archive has already been deleted.</div>
@@ -227,8 +233,6 @@ export default function Content({
             </div>
 
             <div className={`pa ${s}`}>
-              <p>{typeof n}</p>
-              <p>{n}</p>
               <div className="w-full">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
@@ -243,7 +247,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea absolute ${s} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                    className="codeArea h-42"
                     name="content"
                     value={archive.content}
                     spellCheck={false}
