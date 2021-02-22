@@ -76,19 +76,21 @@ export default function AddArchive({ name }: { name: string }) {
       textarea.focus();
       textarea.setSelectionRange(pos + 1, pos + 1);
     }
-    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
+    /*var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
+    */
   };
 
   const handleLoad = () => {
-    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
+    /*var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
+    */
   };
 
   const handleBacktoHome = (e) => {
@@ -185,7 +187,7 @@ export default function AddArchive({ name }: { name: string }) {
           </button>
         </div>
 
-        <div className={`code h-${height}`}>
+        <div className={`code h-${'a'.repeat(100)}`}>
           <pre>
             <code id="code" className={`language-${archive.language} w-full`}>
               {archive.content}
@@ -196,7 +198,7 @@ export default function AddArchive({ name }: { name: string }) {
             <pre>
               <textarea
                 id="textarea"
-                className={`codeArea h-${height}`}
+                className={`codeArea h-${'a'.repeat(100)}`}
                 name="content"
                 aria-required={true}
                 value={archive.content}

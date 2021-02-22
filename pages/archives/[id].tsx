@@ -92,23 +92,25 @@ export default function Content({
       textarea.focus();
       textarea.setSelectionRange(pos + 1, pos + 1);
     }
-    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
+    /*var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
       const target = document.getElementById('textarea') as HTMLTextAreaElement;
       target.className = 'codeArea h-' + height;
     }
+    */
   };
 
   const handleLoad = () => {
-    var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
+    /* var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
       const target = document.getElementById('textarea') as HTMLTextAreaElement;
       target.className = 'codeArea h-' + height;
     }
+    */
   };
 
   const handleBacktoHome = (e) => {
@@ -225,7 +227,7 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`code h-${height}`}>
+            <div className={`code h-${'a'.repeat(100)}`}>
               <div className="w-full">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
@@ -238,7 +240,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className="codeArea h-a"
+                    className={`codeArea h-${'a'.repeat(100)}`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
