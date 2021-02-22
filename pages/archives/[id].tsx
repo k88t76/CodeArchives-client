@@ -96,6 +96,8 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
+      const target = document.getElementById('textarea') as HTMLTextAreaElement;
+      target.className = 'codeArea h-' + height;
     }
   };
 
@@ -104,6 +106,8 @@ export default function Content({
     var lines = txt.split('\n').length;
     if (lines > 33) {
       setHeight('a'.repeat((lines - 33) / 2 + 1));
+      const target = document.getElementById('textarea') as HTMLTextAreaElement;
+      target.className = 'codeArea h-' + height;
     }
   };
 
@@ -234,7 +238,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea h-${height}`}
+                    className="codeArea h-a"
                     name="content"
                     value={archive.content}
                     spellCheck={false}
