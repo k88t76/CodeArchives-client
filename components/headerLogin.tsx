@@ -10,7 +10,7 @@ export default function HeaderLogin() {
   };
   return (
     <div className="header">
-      <div className="text-green-700 text-center hover:cursor-pointer">
+      <div className="text-center hover:cursor-pointer">
         <p onClick={handleBacktoHome} className="logo">
           Code Archives
         </p>

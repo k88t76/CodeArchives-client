@@ -22,11 +22,16 @@ export default function AddArchive({ name }: { name: string }) {
     message: '',
   });
 
-  const [n, setN] = useState(45);
+  const [height, setHeight] = useState('a');
 
   const handleChange = (e) => {
     setArchive({ ...archive, [e.target.name]: e.target.value });
     setTimeout(Prism.highlightAll, 0);
+    var txt = archive.content;
+    var lines = txt.split('\n').length;
+    if (lines > 33) {
+      setHeight('a'.repeat((lines - 33) / 2 + 1));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -74,19 +79,15 @@ export default function AddArchive({ name }: { name: string }) {
     var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
-      if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
-      }
+      setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
   };
 
-  const handleFocus = () => {
+  const handleLoad = () => {
     var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
-      if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 54);
-      }
+      setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
   };
 
@@ -97,33 +98,36 @@ export default function AddArchive({ name }: { name: string }) {
   };
 
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{archive.title}</title>
       </Head>
       <header className="header">
         <HeaderLogin />
       </header>
-      <div className="pt-24 px-5">
+      <div onLoad={handleLoad} className="pt-24 px-5">
         <div className="flex items-center justify-center bg-blue-600 -ml-5 pr-8 pl-3 fixed z-40 w-full top-10 h-10">
-          <p onClick={handleBacktoHome} className="flex mr-4 -ml-8 hover:cursor-pointer">
+          <button type="submit" onClick={handleBacktoHome} className="flex mr-4 -ml-8 hover:cursor-pointer">
+            <p className="-mt-4 -mr-7 text-xs font-bold text-white">Home</p>
             <Image src="/images/home.png" alt="back to Home" width={26} height={26} />
-          </p>
+          </button>
 
           <button type="submit" className="w-10  flex z-50 top-12 hover:cursor-not-allowed focus:outline-none">
+            <p className="-mt-4 -mr-8 text-xs font-bold text-white">Delete</p>
             <Image src="/images/trush.png" alt="Delete" width={26} height={26} />
           </button>
           <input
             type="text"
             name="title"
-            className="flex text-center w-38 px-1 mr-2 z-50 h-6"
+            className="flex text-center w-38 px-1  ml-1 mr-5 z-50 h-6"
             spellCheck={false}
             value={archive.title}
             placeholder="Title"
+            required={true}
             onChange={handleChange}
           />
 
-          <select id="language" className="flex z-50 mx-1 px-1 mt-0.5 text-sm h-6" onChange={handleLanguage}>
+          <select id="language" className="flex z-50 mr-1 px-1 mt-0.5 text-sm h-6" onChange={handleLanguage}>
             <option>Language</option>
             <option id="go" value="go">
               Go
@@ -176,35 +180,30 @@ export default function AddArchive({ name }: { name: string }) {
           </select>
 
           <button type="submit" form="create" className="z-50 flex -mr-40 px-2 pt-0.5 focus:outline-none">
+            <p className="-mt-4 -mr-6 text-xs font-bold text-white">Save</p>
             <Image src="/images/check.png" alt="Edit" width={24} height={24} />
           </button>
         </div>
 
-        <div className={`pa h-${String(n)}`}>
-          <div className="w-full">
-            <pre>
-              <code id="code" className={`language-${archive.language}`}>
-                {archive.content}
-              </code>
-            </pre>
-          </div>
-
-          <br />
+        <div className={`code h-${height}`}>
+          <pre>
+            <code id="code" className={`language-${archive.language} w-full`}>
+              {archive.content}
+            </code>
+          </pre>
 
           <form id="create" action={`${url}/create`} method="post" onSubmit={handleSubmit}>
             <pre>
               <textarea
                 id="textarea"
-                className={`codeArea absolute h-${String(
-                  n
-                )} top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden`}
+                className={`codeArea h-${height}`}
                 name="content"
+                aria-required={true}
                 value={archive.content}
                 spellCheck={false}
                 autoFocus={true}
                 onChange={handleChange}
                 onKeyDown={handleKeydown}
-                onFocus={handleFocus}
               />
             </pre>
           </form>
@@ -215,14 +214,14 @@ export default function AddArchive({ name }: { name: string }) {
 }
 
 export async function getServerSideProps({ req }) {
-  const token = req.cookies.token || '';
-  const data = await fetch(`${url}/userbytoken`, {
+  const token: string = req.cookies.token || '';
+  const data: Response = await fetch(`${url}/userbytoken`, {
     method: 'POST',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(token),
   });
-  const name = await data.json();
+  const name: string = await data.json();
   return {
     props: {
       name,

@@ -1,4 +1,5 @@
 import Layout from '../components/layout';
+import Link from 'next/link';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import HeaderUnLogin from '../components/headerUnLogin';
@@ -8,11 +9,6 @@ import Cookie from 'js-cookie';
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
 export default function TestSignIn() {
-  const [response, setResponse] = useState({
-    type: '',
-    message: '',
-  });
-
   const [user, setUser] = useState({
     name: 'test-user',
     password: 'test',
@@ -23,34 +19,52 @@ export default function TestSignIn() {
   const handleTestSignIn = async (e) => {
     e.preventDefault();
     const res = await fetchAuth(user, 'testsignin');
-    if (res === 'Wrong Password') {
-      setResponse({
-        type: 'error',
-        message: 'The password is incorrect',
-      });
-    } else {
-      Cookie.set('token', res, { expires: 1 });
-      Router.push('/');
-    }
+    Cookie.set('token', res, { expires: 1 });
+    Router.push('/');
   };
 
   return (
     <Layout>
       <HeaderUnLogin />
       <div className="content">
-        {response.message}
-        <form action={`${url}/testsignin`} method="post" onSubmit={handleTestSignIn}>
-          <label>UserName</label>
-          <div>
-            <input type="text" value="test-user" name="name" readOnly={true} onChange={handleChange} required />
-          </div>
-
-          <label>Password</label>
-          <div>
-            <input type="password" value="test" name="password" readOnly={true} onChange={handleChange} required />
-          </div>
-          <button type="submit">Test Sign in</button>
-        </form>
+        <div className="mt-32 md:mx-auto w-full md:w-3/4 lg:w-160 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+          <div className="font-bold self-center text-xl sm:text-2xl uppercase text-gray-800">Guest Sign in</div>
+          <form action={`${url}/testsignin`} method="post" onSubmit={handleTestSignIn} className="my-4">
+            <label className="block text-sm font-bold mb-2">Username</label>
+            <input
+              type="text"
+              value="guest-user"
+              name="name"
+              onChange={handleChange}
+              readOnly={true}
+              className="shadow appearance-none border rounded w-full py-2 px-3"
+            />
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2">Password</label>
+              <input
+                type="text"
+                name="password"
+                value="guest"
+                onChange={handleChange}
+                readOnly={true}
+                className="shadow appearance-none border border-red rounded w-full py-2 px-3 mb-3"
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 shadow-md text-white font-bold py-2 px-4 rounded"
+              >
+                Sign in
+              </button>
+              <Link href="/">
+                <a className="inline-block font-bold text-sm text-gray-500 hover:text-blue-500">
+                  Sign in as your account?
+                </a>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </Layout>
   );

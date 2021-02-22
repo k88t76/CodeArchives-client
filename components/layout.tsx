@@ -5,7 +5,7 @@ import Prism from '../public/js/prism.js';
 
 export const siteTitle = 'CodeArchives';
 
-export default function Layout({ children, home }: { children: React.ReactNode; home?: boolean }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const handleBacktoHome = (e) => {
     e.preventDefault();
     setTimeout(Prism.highlightAll, 1);
@@ -13,7 +13,7 @@ export default function Layout({ children, home }: { children: React.ReactNode; 
   };
 
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Code Archives is a web service for storing your codes" />
@@ -26,14 +26,7 @@ export default function Layout({ children, home }: { children: React.ReactNode; 
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <div>
-        <main>{children}</main>
-      </div>
-      {!home && (
-        <div className="text-blue-600 hover:cursor-pointer">
-          <p onClick={handleBacktoHome}>← Back to home</p>
-        </div>
-      )}
-    </div>
+      <main>{children}</main>
+    </>
   );
 }

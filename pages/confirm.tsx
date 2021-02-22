@@ -10,7 +10,7 @@ export default function Confirm() {
     Cookie.remove('token');
     Router.push({
       pathname: '/',
-      query: { response: 'You have signed out successfully.' },
+      query: { type: 'success', response: 'You have signed out successfully.' },
     });
   };
 
@@ -22,14 +22,14 @@ export default function Confirm() {
   return (
     <Layout>
       <HeaderLogin />
-      <div className="content">
-        <div className="confirm">
-          <div className="message">Do you want to Sign out?</div>
+      <div className="content flex flex-col">
+        <div className="self-center text-xl font-bold mt-20">Are you sure you want to sign out?</div>
 
-          <button type="submit" onClick={handleSignout} className="btn">
+        <div className="flex mx-auto mt-4">
+          <button type="submit" onClick={handleSignout} className="btn w-20 m-4">
             Yes
           </button>
-          <button type="submit" onClick={handleBacktoHome} className="btn">
+          <button type="submit" onClick={handleBacktoHome} className="btn w-20 m-4">
             No
           </button>
         </div>

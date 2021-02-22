@@ -1,7 +1,7 @@
-type User = {
+interface User {
   name: string;
   password: string;
-};
+}
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 

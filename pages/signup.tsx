@@ -5,7 +5,6 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import Cookie from 'js-cookie';
 import { fetchAuth } from '../lib/auth';
-import HeaderLogin from '../components/headerLogin';
 
 export default function Signup() {
   const [user, setUser] = useState({
@@ -37,7 +36,7 @@ export default function Signup() {
     <Layout>
       <HeaderUnLogin />
       <div className="content">
-        {response.message}
+        <p className={`${response.type}`}>{response.message}</p>
         <Form path="signup" handleSubmit={handleSignup} handleChange={handleChange} />
       </div>
     </Layout>

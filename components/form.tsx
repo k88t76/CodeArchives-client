@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
 export default function Form({
@@ -17,17 +19,52 @@ export default function Form({
     }
   };
 
+  const handleAlt = (path: string) => {
+    if (path === 'signin') {
+      return 'Sign in as a Guest?';
+    } else if (path === 'signup') {
+      return 'Back to Home';
+    }
+  };
+
   return (
-    <form action={`${url}/${path}`} method="post" onSubmit={handleSubmit}>
-      <label>UserName</label>
-      <div>
-        <input type="text" placeholder="Enter UserName" name="name" onChange={handleChange} required />
+    <div className="mt-32 md:mx-auto w-full md:w-3/4 lg:w-160 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+      <div className="font-bold self-center text-xl sm:text-2xl uppercase text-gray-800">
+        {path === 'signup' ? 'Sign up' : 'Please Sign in'}
       </div>
-      <label>Password</label>
-      <div>
-        <input type="password" placeholder="Enter Password" name="password" onChange={handleChange} required />
-      </div>
-      <button type="submit">{handleButton(path)}</button>
-    </form>
+      <form action={`${url}/${path}`} method="post" onSubmit={handleSubmit} className="my-4">
+        <label className="block text-sm font-bold mb-2">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          name="name"
+          onChange={handleChange}
+          required
+          className="shadow appearance-none border rounded w-full py-2 px-3"
+        />
+        <div className="mb-6">
+          <label className="block text-sm font-bold mb-2">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            className="shadow appearance-none border border-red rounded w-full py-2 px-3 mb-3"
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 shadow-md text-white font-bold py-2 px-4 rounded"
+          >
+            {handleButton(path)}
+          </button>
+          <Link href={path === 'signin' ? '/test-signin' : '/'}>
+            <a className="inline-block font-bold text-sm text-gray-500 hover:text-blue-500">{handleAlt(path)}</a>
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }

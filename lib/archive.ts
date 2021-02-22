@@ -1,13 +1,13 @@
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export type Archive = {
+export interface Archive {
   uuid: string;
   content: string;
   title: string;
   author: string;
   language: string;
   created_at: string;
-};
+}
 
 export async function fetchArchives(token: string, search?: string): Promise<Archive[] | null> {
   var path = `${url}/archives`;
@@ -101,6 +101,7 @@ export async function deleteArchive(id: string): Promise<number | null> {
   const response = await fetch(`${url}/delete/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
   })
     .then((res: Response) => res)
     .catch((error) => {

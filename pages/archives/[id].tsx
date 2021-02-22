@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Image from 'next/image';
 import Layout from '../../components/layout';
 import Head from 'next/head';
@@ -6,10 +6,7 @@ import Router from 'next/router';
 import { useState, useEffect } from 'react';
 import HeaderLogin from '../../components/headerLogin';
 import Prism from '../../public/js/prism.js';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
 import { editArchive, deleteArchive } from '../../lib/archive';
-import { stringify } from 'postcss';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
@@ -32,8 +29,7 @@ export default function Content({
     language: data && data.language,
   });
 
-  const [n, setN] = useState(42);
-  const [s, setS] = useState<string>(String(n));
+  const [height, setHeight] = useState<string>('a');
 
   const [response, setResponse] = useState({
     type: '',
@@ -63,7 +59,7 @@ export default function Content({
     const res = await deleteArchive(id);
     Router.push({
       pathname: '/',
-      query: { response: `Archive has deleted (title: ${archive.title})` },
+      query: { type: 'success', response: `Archive has deleted (title: ${archive.title})` },
     });
   };
 
@@ -99,31 +95,21 @@ export default function Content({
     var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
-      if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 51);
-        setS(String(n));
-        const target = document.getElementById('textarea') as HTMLTextAreaElement;
-        target.className = 'codeArea h-' + s;
-      }
+      setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
   };
 
-  const handleFocus = () => {
+  const handleLoad = () => {
     var txt = (document.getElementById('textarea') as HTMLTextAreaElement).value;
     var lines = txt.split('\n').length;
     if (lines > 33) {
-      if (lines % 2 === 1) {
-        setN((3 * (lines - 33)) / 2 + 51);
-        setS(String(n));
-        const target = document.getElementById('textarea') as HTMLTextAreaElement;
-        target.className = 'codeArea h-' + s;
-      }
+      setHeight('a'.repeat((lines - 33) / 2 + 1));
     }
   };
 
   const handleBacktoHome = (e) => {
     e.preventDefault();
-    setTimeout(Prism.highlightAll, 1);
+    setTimeout(Prism.highlightAll, 0);
     Router.push('/');
   };
 
@@ -139,44 +125,46 @@ export default function Content({
   }, []);
 
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{archive.title}</title>
       </Head>
       <header className="header">
         <HeaderLogin />
       </header>
-      <div onLoad={handleFocus} className="pt-24 px-5">
+      <div onLoad={handleLoad} className="pt-24 px-5">
         {!data && (
-          <div>
+          <>
             <div>This Archive has already been deleted.</div>
             <div className="text-blue-600 hover:cursor-pointer">
               <p onClick={handleBacktoHome}>← Back to home</p>
             </div>
-          </div>
+          </>
         )}
         {data && (
           <div onLoad={handleSetSelected}>
             <div className="flex items-center justify-center bg-blue-600 -ml-5 pr-8 pl-3 fixed z-40 w-full top-10 h-10">
-              <p onClick={handleBacktoHome} className="flex mr-4 -ml-8 hover:cursor-pointer">
+              <button type="submit" onClick={handleBacktoHome} className="flex mr-4 -ml-8 hover:cursor-pointer">
+                <p className="-mt-4 -mr-7 text-xs font-bold text-white">Home</p>
                 <Image src="/images/home.png" alt="back to Home" width={26} height={26} />
-              </p>
+              </button>
               <form action={`${url}/delete/`} method="post" onSubmit={handleDelete}>
-                <button type="submit" className="w-10  flex z-50 top-12 focus:outline-none">
+                <button type="submit" className="w-10  flex z-50 top-12 hover:cursor-pointer focus:outline-none">
+                  <p className="-mt-4 -mr-8 text-xs font-bold text-white">Delete</p>
                   <Image src="/images/trush.png" alt="Delete" width={26} height={26} />
                 </button>
               </form>
               <input
                 type="text"
                 name="title"
-                className="flex text-center w-38 px-1 mr-2 z-50 h-6"
+                className="flex text-center w-38 px-1  ml-1 mr-5 z-50 h-6"
                 spellCheck={false}
                 value={archive.title}
                 placeholder="Title"
                 onChange={handleChange}
               />
 
-              <select id="language" className="flex z-50 mx-1 px-1 mt-0.5 text-sm h-6" onChange={handleLanguage}>
+              <select id="language" className="flex z-50 mr-1 px-1 mt-0.5 text-sm h-6" onChange={handleLanguage}>
                 <option id="go" value="go">
                   Go
                 </option>
@@ -228,11 +216,12 @@ export default function Content({
               </select>
 
               <button type="submit" form="edit" className="z-50 flex -mr-40 px-2 pt-0.5 focus:outline-none">
+                <p className="-mt-4 -mr-6 text-xs font-bold text-white">Save</p>
                 <Image src="/images/check.png" alt="Edit" width={24} height={24} />
               </button>
             </div>
 
-            <div className={`pa ${s}`}>
+            <div className={`code h-${height}`}>
               <div className="w-full">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
@@ -241,20 +230,17 @@ export default function Content({
                 </pre>
               </div>
 
-              <br />
-
               <form id="edit" action={`${url}/edit/${id}`} method="post" onSubmit={handleSubmit}>
                 <pre>
                   <textarea
                     id="textarea"
-                    className="codeArea h-42"
+                    className={`codeArea h-${height}`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
                     autoFocus={true}
                     onChange={handleChange}
                     onKeyDown={handleKeydown}
-                    onFocus={handleFocus}
                   />
                 </pre>
               </form>
