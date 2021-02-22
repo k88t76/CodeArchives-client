@@ -49,7 +49,7 @@ export default function Search({
 
         <div className="pl-36">
           <button type="submit" className="flex fixed right-9 mt-0.5 z-20 focus:outline-none hover:bg-gray-50">
-            <Image src="/images/search.png" alt="×" width={18} height={18} />
+            <Image src="/images/search.png" alt="🔎" width={18} height={18} />
           </button>
         </div>
       </form>
