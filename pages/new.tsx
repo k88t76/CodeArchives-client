@@ -187,7 +187,7 @@ export default function AddArchive({ name }: { name: string }) {
           </button>
         </div>
 
-        <div className={`code h-${'a'.repeat(100)}`}>
+        <div className={`code h-200`}>
           <pre>
             <code id="code" className={`language-${archive.language} w-full`}>
               {archive.content}
@@ -198,7 +198,7 @@ export default function AddArchive({ name }: { name: string }) {
             <pre>
               <textarea
                 id="textarea"
-                className={`codeArea h-${'a'.repeat(100)}`}
+                className={`codeArea h-200`}
                 name="content"
                 aria-required={true}
                 value={archive.content}

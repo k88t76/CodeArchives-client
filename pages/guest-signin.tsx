@@ -10,15 +10,15 @@ const url = 'https://codearchives-server.dt.r.appspot.com';
 
 export default function TestSignIn() {
   const [user, setUser] = useState({
-    name: 'test-user',
-    password: 'test',
+    name: 'guest-user',
+    password: 'guest',
   });
 
   const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const handleTestSignIn = async (e) => {
     e.preventDefault();
-    const res = await fetchAuth(user, 'testsignin');
+    const res = await fetchAuth(user, 'guestsignin');
     Cookie.set('token', res, { expires: 1 });
     Router.push('/');
   };
@@ -29,7 +29,7 @@ export default function TestSignIn() {
       <div className="content">
         <div className="mt-32 md:mx-auto w-full md:w-3/4 lg:w-160 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
           <div className="font-bold self-center text-xl sm:text-2xl uppercase text-gray-800">Guest Sign in</div>
-          <form action={`${url}/testsignin`} method="post" onSubmit={handleTestSignIn} className="my-4">
+          <form action={`${url}/guestsignin`} method="post" onSubmit={handleTestSignIn} className="my-4">
             <label className="block text-sm font-bold mb-2">Username</label>
             <input
               type="text"

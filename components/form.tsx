@@ -60,7 +60,7 @@ export default function Form({
           >
             {handleButton(path)}
           </button>
-          <Link href={path === 'signin' ? '/test-signin' : '/'}>
+          <Link href={path === 'signin' ? '/guest-signin' : '/'}>
             <a className="inline-block font-bold text-sm text-gray-500 hover:text-blue-500">{handleAlt(path)}</a>
           </Link>
         </div>

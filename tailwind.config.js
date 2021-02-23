@@ -1,5 +1,5 @@
 // incrementing 'a' because cast doesn't work for className
-const extendHeight = () => {
+/*const extendHeight = () => {
   var height = {};
   var key = 'a';
   for (let i = 0; i < 300; i++) {
@@ -8,13 +8,16 @@ const extendHeight = () => {
   }
   return height;
 };
+*/
 
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      height: extendHeight(),
+      height: {
+        200: '200rem',
+      },
       width: {
         160: '40rem',
       },

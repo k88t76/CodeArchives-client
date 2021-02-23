@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Layout from '../../components/layout';
 import Head from 'next/head';
@@ -29,7 +29,7 @@ export default function Content({
     language: data && data.language,
   });
 
-  const [height, setHeight] = useState<string>('a');
+  //const [height, setHeight] = useState<string>('a');
 
   const [response, setResponse] = useState({
     type: '',
@@ -227,7 +227,7 @@ export default function Content({
               </button>
             </div>
 
-            <div className={`code h-${'a'.repeat(100)}`}>
+            <div className={`code h-200`}>
               <div className="w-full">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
@@ -240,7 +240,7 @@ export default function Content({
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea h-${'a'.repeat(100)}`}
+                    className={`codeArea h-200`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
