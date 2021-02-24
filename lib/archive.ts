@@ -82,6 +82,7 @@ export async function editArchive(
 ): Promise<number | null> {
   const response = await fetch(`${url}/edit/${id}`, {
     method: 'PUT',
+    mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(archive),
   })

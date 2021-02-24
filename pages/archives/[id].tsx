@@ -59,7 +59,7 @@ export default function Content({
     const res = await deleteArchive(id);
     Router.push({
       pathname: '/',
-      query: { type: 'success', response: `Archive has deleted (title: ${archive.title})` },
+      query: { type: 'success', response: `Archive has been deleted (title: ${archive.title})` },
     });
   };
 
@@ -258,17 +258,19 @@ export default function Content({
   );
 }
 
-/*export async function getStaticPaths() {
+export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
   };
 }
-*/
 
-export async function getServerSideProps({ params }) {
-  const id = params.id;
+export async function getStaticProps(context) {
+  const id = context.params.id;
   const res = await fetch(`${url}/archive/${id}`);
   const data = await res.json();
-  return { props: { data, id } };
+  return {
+    props: { data, id },
+    revalidate: 60,
+  };
 }
