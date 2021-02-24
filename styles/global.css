@@ -59,6 +59,8 @@ img {
 
 .container {
   border-left: 10px solid #358ccb;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .container::-webkit-scrollbar {
