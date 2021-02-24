@@ -44,14 +44,14 @@ export default function Content({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await editArchive(id, archive);
-    if (res === 200) {
-      Router.push('/');
-    } else {
+    // if (res === 200) {
+    Router.push('/');
+    /* } else {
       setResponse({
         type: 'error',
         message: 'Bad Request',
       });
-    }
+    */
   };
 
   const handleDelete = async (e) => {
