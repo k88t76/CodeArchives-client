@@ -258,16 +258,17 @@ export default function Content({
   );
 }
 
-export async function getStaticPaths() {
+/*export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true,
   };
 }
+*/
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.id;
   const res = await fetch(`${url}/archive/${id}`);
   const data = await res.json();
-  return { props: { data, id }, revalidate: 60 };
+  return { props: { data, id } };
 }
