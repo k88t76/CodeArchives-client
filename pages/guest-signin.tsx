@@ -1,4 +1,5 @@
 import Layout from '../components/layout';
+import { NextPage } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
 import React, { useState } from 'react';
@@ -8,7 +9,7 @@ import Cookie from 'js-cookie';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export default function TestSignIn() {
+const GuestSignin: NextPage = () => {
   const [user, setUser] = useState({
     name: 'guest-user',
     password: 'guest',
@@ -68,4 +69,6 @@ export default function TestSignIn() {
       </div>
     </Layout>
   );
-}
+};
+
+export default GuestSignin;

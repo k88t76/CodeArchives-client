@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import HeaderUnLogin from '../components/headerUnLogin';
 import HeaderLogin from '../components/headerLogin';
 import { useRouter } from 'next/router';
@@ -13,12 +14,17 @@ import { fetchAuth } from '../lib/auth';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
+interface Props {
+  data: Archive[];
+  to: string;
+}
+
 interface ResponseState {
   type: string | string[];
   message: string | string[];
 }
 
-export default function Home({ data, to }: { data: Archive[]; to: string }) {
+const Home: NextPage<Props> = ({ data, to }) => {
   const [archives, setArchives] = useState(data);
   const [token, setToken] = useState(to);
   const [response, setResponse] = useState<ResponseState>({
@@ -111,9 +117,9 @@ export default function Home({ data, to }: { data: Archive[]; to: string }) {
       </Layout>
     );
   }
-}
+};
 
-export async function getServerSideProps({ req }) {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const to: string = req.cookies.token || '';
   const data: Archive[] = await fetchArchives(to);
   return {
@@ -122,4 +128,6 @@ export async function getServerSideProps({ req }) {
       to,
     },
   };
-}
+};
+
+export default Home;

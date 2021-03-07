@@ -1,8 +1,9 @@
 import Head from 'next/head';
+import React from 'react';
 
 export const siteTitle = 'CodeArchives';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+const Layout: React.FC = ({ children }) => {
   return (
     <>
       <Head>
@@ -13,4 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
     </>
   );
-}
+};
+
+export default Layout;

@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Router from 'next/router';
+import React from 'react';
 import Prism from '../public/js/prism.js';
 
-export default function HeaderLogin() {
-  const handleBacktoHome = (e) => {
+const HeaderLogin: React.FC = () => {
+  const handleBacktoHome = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setTimeout(Prism.highlightAll, 1);
     Router.push('/');
@@ -23,4 +24,6 @@ export default function HeaderLogin() {
       </Link>
     </div>
   );
-}
+};
+
+export default HeaderLogin;

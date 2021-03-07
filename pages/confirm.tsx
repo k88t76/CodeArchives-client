@@ -1,10 +1,11 @@
 import Layout from '../components/layout';
 import React from 'react';
+import { NextPage } from 'next';
 import Router from 'next/router';
 import Cookie from 'js-cookie';
 import HeaderLogin from '../components/headerLogin';
 
-export default function Confirm() {
+const Confirm: NextPage = () => {
   const handleSignout = (e) => {
     e.preventDefault();
     Cookie.remove('token');
@@ -36,4 +37,6 @@ export default function Confirm() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Confirm;

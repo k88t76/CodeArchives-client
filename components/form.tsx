@@ -1,16 +1,15 @@
 import Link from 'next/link';
+import React from 'react';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export default function Form({
-  path,
-  handleSubmit,
-  handleChange,
-}: {
+interface Props {
   path: string;
-  handleSubmit: (e) => Promise<void>;
-  handleChange: (e) => void;
-}) {
+  handleSubmit: (e: any) => Promise<void>;
+  handleChange: (e: any) => void;
+}
+
+export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
   const handleButton = (path: string) => {
     if (path === 'signin') {
       return 'Sign in';
@@ -67,4 +66,6 @@ export default function Form({
       </form>
     </div>
   );
-}
+};
+
+export default Form;

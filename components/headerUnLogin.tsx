@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import React from 'react';
+import HeaderLogin from './headerLogin';
 
-export default function Header() {
+const HeaderUnLogin: React.FC = () => {
   return (
     <div className="header">
       <Link href="/">
@@ -13,4 +15,6 @@ export default function Header() {
       </Link>
     </div>
   );
-}
+};
+
+export default HeaderUnLogin;

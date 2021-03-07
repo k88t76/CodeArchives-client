@@ -1,7 +1,12 @@
 import Link from 'next/link';
+import React from 'react';
 import { Archive } from '../lib/archive';
 
-export default function Contents({ archives }: { archives: Archive[] }) {
+interface Props {
+  archives: Archive[];
+}
+
+const Contents: React.FC<Props> = ({ archives }) => {
   return (
     <ul className="flex flex-wrap items-center pt-4 z-0">
       {archives.map(({ uuid, content, title, language }) => (
@@ -20,4 +25,6 @@ export default function Contents({ archives }: { archives: Archive[] }) {
       ))}
     </ul>
   );
-}
+};
+
+export default Contents;

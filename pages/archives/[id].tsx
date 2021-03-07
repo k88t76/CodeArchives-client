@@ -1,27 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 import Image from 'next/image';
 import Layout from '../../components/layout';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Router from 'next/router';
-import { useState, useEffect } from 'react';
 import HeaderLogin from '../../components/headerLogin';
 import Prism from '../../public/js/prism.js';
-import { editArchive, deleteArchive } from '../../lib/archive';
+import { Archive, editArchive, deleteArchive } from '../../lib/archive';
+import { NextApiRequestQuery } from 'next/dist/next-server/server/api-utils';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export default function Content({
-  data,
-  id,
-}: {
-  data: {
-    content: string;
-    title: string;
-    author: string;
-    language: string;
-  };
+interface Props {
+  data: Archive;
   id: string;
-}) {
+}
+
+const Content: NextPage<Props> = ({ data, id }) => {
   const [archive, setArchive] = useState({
     content: data && data.content,
     title: data && data.title,
@@ -44,14 +39,14 @@ export default function Content({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await editArchive(id, archive);
-    // if (res === 200) {
-    Router.push('/');
-    /* } else {
+    if (res === 200) {
+      Router.push('/');
+    } else {
       setResponse({
         type: 'error',
-        message: 'Bad Request',
+        message: 'Edit failure',
       });
-    */
+    }
   };
 
   const handleDelete = async (e) => {
@@ -256,14 +251,14 @@ export default function Content({
       </div>
     </Layout>
   );
-}
+};
 
-export const getStaticPaths = async () => ({
+export const getStaticPaths: GetStaticPaths = async () => ({
   paths: [],
   fallback: true,
 });
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params.id;
   const res = await fetch(`${url}/archive/${id}`);
   const data = await res.json();
@@ -272,3 +267,5 @@ export const getStaticProps = async ({ params }) => {
     revalidate: 1,
   };
 };
+
+export default Content;

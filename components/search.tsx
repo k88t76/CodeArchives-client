@@ -5,13 +5,12 @@ import { Archive, fetchArchives } from '../lib/archive';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export default function Search({
-  setArchives,
-  token,
-}: {
+interface Props {
   setArchives: React.Dispatch<React.SetStateAction<Archive[]>>;
   token: string;
-}) {
+}
+
+const Search: React.FC<Props> = ({ setArchives, token }) => {
   const [search, setSearch] = useState('');
 
   const handleChange = (e) => setSearch(e.target.value);
@@ -61,4 +60,6 @@ export default function Search({
       </form>
     </div>
   );
-}
+};
+
+export default Search;

@@ -1,3 +1,4 @@
+import { NextPage } from 'next';
 import Layout from '../components/layout';
 import HeaderUnLogin from '../components/headerUnLogin';
 import Form from '../components/form';
@@ -6,7 +7,7 @@ import React, { useState } from 'react';
 import Cookie from 'js-cookie';
 import { fetchAuth } from '../lib/auth';
 
-export default function Signup() {
+const Signup: NextPage = () => {
   const [user, setUser] = useState({
     name: '',
     password: '',
@@ -41,4 +42,6 @@ export default function Signup() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Signup;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import Router from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -9,7 +10,11 @@ import Prism from '../public/js/prism.js';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
-export default function AddArchive({ name }: { name: string }) {
+interface Props {
+  name: string;
+}
+
+const New: NextPage<Props> = ({ name }) => {
   const [archive, setArchive] = useState({
     content: '',
     title: '',
@@ -213,9 +218,9 @@ export default function AddArchive({ name }: { name: string }) {
       </div>
     </Layout>
   );
-}
+};
 
-export async function getServerSideProps({ req }) {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token: string = req.cookies.token || '';
   const data: Response = await fetch(`${url}/userbytoken`, {
     method: 'POST',
@@ -229,4 +234,6 @@ export async function getServerSideProps({ req }) {
       name,
     },
   };
-}
+};
+
+export default New;
