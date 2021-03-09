@@ -8,7 +8,7 @@
 }
 
 .header {
-  @apply flex items-center justify-between bg-blue-600 text-white pr-8 pl-3 fixed z-40 w-full h-10;
+  @apply flex items-center bg-blue-600 text-white pr-8 pl-3 fixed  w-full h-14 z-40;
 }
 
 .logo {
@@ -20,11 +20,11 @@
 }
 
 .container {
-  @apply block w-80 max-h-48 m-3 text-xs z-0 overflow-y-scroll hover:transform hover:-translate-y-1 hover:cursor-pointer;
+  @apply block w-80 max-h-48 mx-5 mb-5 mt-1 text-xs overflow-y-scroll hover:transform hover:-translate-y-1 hover:cursor-pointer;
 }
 
 .codeArea {
-  @apply absolute top-28 -mt-2 pl-2 z-30 w-screen text-transparent bg-transparent outline-none overflow-hidden;
+  @apply absolute top-28 -mt-2 pl-2 z-40 w-screen text-transparent bg-transparent outline-none overflow-hidden;
 }
 
 .success {
@@ -58,9 +58,17 @@ img {
 }
 
 .container {
-  border-left: 10px solid #358ccb;
+  border: 0.5px solid gray;
+  background-color: #fdfdfd;
+  background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
+  background-size: 3em 3em;
+  background-origin: content-box;
+  background-attachment: local;
+  border-left: 3px solid #358ccb;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  width: 380px;
+  height: 220px;
 }
 
 .container::-webkit-scrollbar {

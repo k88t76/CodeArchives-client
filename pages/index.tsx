@@ -10,7 +10,7 @@ import Contents from '../components/contents';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import Cookie from 'js-cookie';
-import { fetchAuth } from '../lib/auth';
+import { fetchAuth, fetchCookie } from '../lib/auth';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 
@@ -27,6 +27,13 @@ interface ResponseState {
 const Home: NextPage<Props> = ({ data, to }) => {
   const [archives, setArchives] = useState(data);
   const [token, setToken] = useState(to);
+  const [c, setC] = useState('');
+  const handleSetCookie = async () => {
+    fetchCookie('set');
+  };
+  const handleGetCookie = async () => {
+    setC(await fetchCookie('get'));
+  };
   const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
@@ -103,16 +110,54 @@ const Home: NextPage<Props> = ({ data, to }) => {
         <div className="header">
           <HeaderLogin />
         </div>
-        <div className="content">
-          <p className={`${response.type}`}>{response.message}</p>
+        <div className="flex w-screen">
+          <aside className="bg-gray-100 sm:block hidden h-screen sticky top-0">
+            <div className="flex text-2xl font-bold ml-8 mt-16 mb-2">
+              <p> Archives</p>
+            </div>
+            <nav className="ml-8 mr-12 font-semibold">
+              <a className="flex w-40 py-2 text-gray-700" href="#">
+                {'server.go'}
+              </a>
+              <a className="-mt-2 flex py-2 text-gray-600" href="#">
+                {'async.rs'}
+              </a>
+            </nav>
+          </aside>
 
-          <section>
-            <Search setArchives={setArchives} token={token} />
-            <h2 className="font-bold text-2xl mt-4 -mb-3 ml-1">Archives</h2>
-            {archives && <Contents archives={archives} />}
+          <div className="content">
+            <p className={`${response.type}`}>{response.message}</p>
 
-            {!archives && <div className="content">Empty</div>}
-          </section>
+            <section>
+              <div className="flex items-center pr-8 pl-3 fixed z-50 w-full h-14 ml-2 mt-2 bg-white">
+                <p>{`Cookie.Value: ${c}`}</p>
+                <span className="btn" onClick={handleSetCookie}>
+                  setCookie
+                </span>
+                <span className="btn" onClick={handleGetCookie}>
+                  getCookie
+                </span>
+
+                <div className="flex-grow"></div>
+                <span className="flex mr-12"></span>
+                <Search setArchives={setArchives} token={token} />
+                <a
+                  href="#"
+                  className="font-bold ml-4 md:inline-block hidden bg-gray-100 px-4 py-1.5 leading-none rounded text-black border  hover:border-transparent hover:text-teal hover:bg-white"
+                >
+                  🪟
+                </a>
+                <a
+                  href="#"
+                  className="font-bold px-4 py-1.5 md:inline-block hidden mr-60 bg-blue-600 leading-none rounded text-white hover:text-teal hover:bg-blue-500 border"
+                >
+                  🔳
+                </a>
+              </div>
+              <div className="pt-12">{archives && <Contents archives={archives} />}</div>
+              {!archives && <div className="content">Empty</div>}
+            </section>
+          </div>
         </div>
       </Layout>
     );

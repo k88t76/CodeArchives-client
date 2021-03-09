@@ -32,30 +32,26 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
   };
 
   return (
-    <div className="flex justify-end pr-6 z-30;">
+    <div className="flex md:mr-6 mr-72 transform -translate-y-0.5 z-50">
       <form action={`${url}/search/`} method="post" onSubmit={handleSearch}>
-        <div className="field">
-          <input
-            className="flex fixed z-30 text-xs border border-blue-500 pl-1 w-32 h-5 rounded"
-            id="form1"
-            type="text"
-            placeholder="Search"
-            name="search"
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <input
+          className="flex z-50 text-black shadow w-72 rounded border-0 p-2 "
+          id="form1"
+          type="text"
+          placeholder="Search"
+          name="search"
+          onChange={handleChange}
+          required
+        />
 
-        <div className="pl-36">
-          <button type="submit" className="flex fixed right-9 mt-0.5 z-20 focus:outline-none hover:bg-gray-50">
-            <Image src="/images/search.png" alt="🔎" width={18} height={18} />
-          </button>
-        </div>
+        <button type="submit" className="flex ml-64 w-25  -mt-8 text-2xl z-50 focus:outline-none">
+          <Image src="/images/search.png" alt="🔎" width={25} height={25} />
+        </button>
       </form>
 
       <form onSubmit={cancelSearch}>
-        <button type="submit" className="flex fixed  right-16 mt-0.5 -mr-0.5 z-30 hover:bg-gray-100 focus:outline-none">
-          <Image src="/images/cancel-btn.png" alt="×" width={18} height={18} />
+        <button type="submit" className="flex mt-3 -ml-16 focus:outline-none">
+          <Image src="/images/cancel-btn.png" alt="×" width={21} height={21} />
         </button>
       </form>
     </div>
