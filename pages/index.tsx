@@ -29,13 +29,11 @@ const Home: NextPage<Props> = ({ data, to }) => {
   const [archives, setArchives] = useState(data);
   const [token, setToken] = useState(to);
   const [c, setC] = useState('');
-  /*  const handleSetCookie = async () => {
-    fetchCookie('set');
-  };
+  const handleSetCookie = async () => {};
   const handleGetCookie = async () => {
-    setC(await fetchCookie('get'));
+    setC(await fetchCookie());
   };
-  */
+
   const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
@@ -119,18 +117,18 @@ const Home: NextPage<Props> = ({ data, to }) => {
             <p className={`${response.type}`}>{response.message}</p>
 
             <section>
-              {/*
-              <div className="flex mt-6">
-                <p>{`Cookie.Value: ${c}`}</p>
-               
-                <span className="btn" onClick={handleSetCookie}>
-                  setCookie
-                </span>
-                <span className="btn" onClick={handleGetCookie}>
-                  getCookie
-                </span>
-              </div>
-*/}
+              {
+                <div className="flex mt-6">
+                  <p>{`Cookie.Value: ${c}`}</p>
+
+                  <span className="btn" onClick={handleSetCookie}>
+                    setCookie
+                  </span>
+                  <span className="btn" onClick={handleGetCookie}>
+                    getCookie
+                  </span>
+                </div>
+              }
 
               <div className="flex-grow"></div>
               <span className="flex mr-12"></span>
@@ -146,7 +144,8 @@ const Home: NextPage<Props> = ({ data, to }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const to: string = (await fetchCookie()) || '';
+  //const to: string = (await fetchCookie()) || '';
+  const to = '';
   const data: Archive[] = await fetchArchives(to);
   return {
     props: {
