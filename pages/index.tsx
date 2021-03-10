@@ -12,8 +12,8 @@ import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { fetchAuth, fetchCookie } from '../lib/auth';
 
-//const url = 'https://codearchives-server.dt.r.appspot.com';
-const url = 'http://localhost:8080';
+const url = 'https://codearchives-server.dt.r.appspot.com';
+//const url = 'http://localhost:8080';
 
 interface Props {
   data: Archive[];
@@ -141,17 +141,6 @@ const Home: NextPage<Props> = ({ data, to }) => {
       </Layout>
     );
   }
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const to: string = (await fetchCookie()) || '';
-  const data: Archive[] = (await fetchArchives(to)) || [];
-  return {
-    props: {
-      data,
-      to,
-    },
-  };
 };
 
 export default Home;
