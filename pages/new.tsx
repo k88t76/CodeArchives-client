@@ -7,8 +7,10 @@ import { createArchive } from '../lib/archive';
 import HeaderLogin from '../components/headerLogin';
 import Layout from '../components/layout';
 import Prism from '../public/js/prism.js';
+import { fetchCookie } from '../lib/auth';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
+//const url = 'http://localhost:8080';
 
 interface Props {
   name: string;
@@ -221,7 +223,7 @@ const New: NextPage<Props> = ({ name }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const token: string = req.cookies.token || '';
+  const token: string = (await fetchCookie()) || '';
   const data: Response = await fetch(`${url}/userbytoken`, {
     method: 'POST',
     mode: 'cors',

@@ -32,10 +32,10 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
   };
 
   return (
-    <div className="flex md:mr-6 mr-72 transform -translate-y-0.5 z-50">
+    <div className="flex fixed right-2 top-20 mr-6 transform -translate-y-0.5 z-50">
       <form action={`${url}/search/`} method="post" onSubmit={handleSearch}>
         <input
-          className="flex z-50 text-black shadow w-72 rounded border-0 p-2 "
+          className="flex z-50 text-black shadow w-72 rounded border border-gray-600 p-2 "
           id="form1"
           type="text"
           placeholder="Search"
@@ -50,8 +50,8 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
       </form>
 
       <form onSubmit={cancelSearch}>
-        <button type="submit" className="flex mt-3 -ml-16 focus:outline-none">
-          <Image src="/images/cancel-btn.png" alt="×" width={21} height={21} />
+        <button type="submit" className="flex mt-2.5 -ml-16 focus:outline-none">
+          <Image src="/images/cancel.png" alt="×" width={26} height={26} />
         </button>
       </form>
     </div>

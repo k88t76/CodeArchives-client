@@ -40,48 +40,36 @@ export async function fetchAuth(user: User, path: string): Promise<string | null
   return json;
 }
 
-export async function fetchCookie(path: string): Promise<any | null> {
-  if (path === 'set') {
-    const response = await fetch(`${url}/setcookie`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify('token'),
+export async function fetchCookie(): Promise<string | null> {
+  const response = await fetch(`${url}/cookie`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  })
+    .then((res: Response) => res)
+    .catch((error) => {
+      console.error(error);
+      return null;
     });
+
+  if (!response) {
     return null;
-  } else {
-    const response = await fetch(`${url}/getcookie`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify('token'),
-    })
-      .then((res: Response) => res)
-      .catch((error) => {
-        console.error(error);
-        return null;
-      });
-
-    if (!response) {
-      return null;
-    }
-
-    const json = await response
-      .json()
-      .then((json: string) => {
-        return json;
-      })
-      .catch((error) => {
-        console.error(error);
-        return null;
-      });
-
-    if (!json) {
-      return null;
-    }
-
-    return json;
   }
+
+  const json = await response
+    .json()
+    .then((json: string) => {
+      return json;
+    })
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
+
+  if (!json) {
+    return null;
+  }
+
+  return json;
 }

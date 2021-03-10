@@ -4,7 +4,6 @@ import HeaderUnLogin from '../components/headerUnLogin';
 import Form from '../components/form';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import Cookie from 'js-cookie';
 import { fetchAuth } from '../lib/auth';
 
 const Signup: NextPage = () => {
@@ -29,7 +28,7 @@ const Signup: NextPage = () => {
         message: 'The username is already used',
       });
     } else {
-      Cookie.set('token', res, { expires: 1 });
+      //Cookie.set('token', res, { expires: 1 });
       Router.push('/');
     }
   };

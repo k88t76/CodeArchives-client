@@ -8,7 +8,7 @@
 }
 
 .header {
-  @apply flex items-center bg-blue-600 text-white pr-8 pl-3 fixed  w-full h-14 z-40;
+  @apply flex items-center bg-blue-600 text-white pr-4 pl-3 fixed  w-full h-14 z-40;
 }
 
 .logo {
@@ -20,11 +20,11 @@
 }
 
 .container {
-  @apply block w-80 max-h-48 mx-5 mb-5 mt-1 text-xs overflow-y-scroll hover:transform hover:-translate-y-1 hover:cursor-pointer;
+  @apply block w-80 max-h-48 mx-5 mb-5 mt-1 text-xs overflow-y-scroll hover:cursor-pointer;
 }
 
 .codeArea {
-  @apply absolute top-28 -mt-2 pl-2 z-40 w-screen text-transparent bg-transparent outline-none overflow-hidden;
+  @apply absolute top-28 -mt-2 pl-2 w-screen text-transparent bg-transparent outline-none overflow-hidden;
 }
 
 .success {
@@ -94,4 +94,8 @@ img {
   background-size: 3em 3em;
   background-origin: content-box;
   background-attachment: local;
+}
+
+.toolbar {
+  margin-top: -100px;
 }

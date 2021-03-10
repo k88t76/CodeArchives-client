@@ -7,8 +7,8 @@ import HeaderUnLogin from '../components/headerUnLogin';
 import { fetchAuth } from '../lib/auth';
 import Cookie from 'js-cookie';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+//const url = 'https://codearchives-server.dt.r.appspot.com';
+const url = 'http://localhost:8080';
 
 const GuestSignin: NextPage = () => {
   const [user, setUser] = useState({

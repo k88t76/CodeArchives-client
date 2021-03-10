@@ -1,15 +1,16 @@
 import React, { useState, useEffect, PropsWithChildren } from 'react';
-import Image from 'next/image';
 import Layout from '../../components/layout';
+import Image from 'next/image';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Router from 'next/router';
 import HeaderLogin from '../../components/headerLogin';
 import Prism from '../../public/js/prism.js';
 import { Archive, editArchive, deleteArchive } from '../../lib/archive';
-import { NextApiRequestQuery } from 'next/dist/next-server/server/api-utils';
+import setImageDetail from '../../lib/setImageDetail';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
+//const url = 'https://codearchives-server.dt.r.appspot.com';
+const url = 'http://localhost:8080';
 
 interface Props {
   data: Archive;
@@ -144,28 +145,23 @@ const Content: NextPage<Props> = ({ data, id }) => {
         )}
         {data && (
           <div onLoad={handleSetSelected}>
-            <div className="flex items-center justify-center bg-blue-600 -ml-5 pr-8 pl-3 fixed z-40 w-full top-10 h-10">
-              <button type="submit" onClick={handleBacktoHome} className="flex mr-4 -ml-8 hover:cursor-pointer">
-                <p className="-mt-4 -mr-7 text-xs font-bold text-white">Home</p>
-                <Image src="/images/home.png" alt="back to Home" width={26} height={26} />
-              </button>
-              <form action={`${url}/delete/`} method="post" onSubmit={handleDelete}>
-                <button type="submit" className="w-10  flex z-50 top-12 hover:cursor-pointer focus:outline-none">
-                  <p className="-mt-4 -mr-8 text-xs font-bold text-white">Delete</p>
-                  <Image src="/images/trush.png" alt="Delete" width={26} height={26} />
-                </button>
-              </form>
+            <div className="toolbar flex z-50 -ml-5 pl-3 py-3 fixed bg-white w-screen">
+              <p className="mt-2 pl-4 mr-4 w-16">{setImageDetail(archive.language)}</p>
               <input
                 type="text"
                 name="title"
-                className="flex text-center w-38 px-1  ml-1 mr-5 z-50 h-6"
+                className="sm:w-72 w-20 pl-2 mt-0.5 mr-5 z-50 h-10 border-2 rounded"
                 spellCheck={false}
                 value={archive.title}
                 placeholder="Title"
                 onChange={handleChange}
               />
 
-              <select id="language" className="flex z-50 mr-1 px-1 mt-0.5 text-sm h-6" onChange={handleLanguage}>
+              <select
+                id="language"
+                className="flex z-50 mt-0.5 mr-6 border-2 sm:w-64 w-20 px-2 h-10 rounded"
+                onChange={handleLanguage}
+              >
                 <option id="go" value="go">
                   Go
                 </option>
@@ -216,14 +212,25 @@ const Content: NextPage<Props> = ({ data, id }) => {
                 </option>
               </select>
 
-              <button type="submit" form="edit" className="z-50 flex -mr-40 px-2 pt-0.5 focus:outline-none">
-                <p className="-mt-4 -mr-6 text-xs font-bold text-white">Save</p>
-                <Image src="/images/check.png" alt="Edit" width={24} height={24} />
+              <form action={`${url}/delete/`} method="post" onSubmit={handleDelete}>
+                <button type="submit" className="z-50 mt-2 w-10 hover:cursor-pointer focus:outline-none">
+                  <Image src={`/images/trush.png`} alt="🗑" width={30} height={30} />
+                </button>
+              </form>
+              <div className="flex-grow"></div>
+              <button
+                type="submit"
+                className="w-32 bg-blue-500 font-semibold text-xl text-white rounded h-10 mr-8 border border-gray-600 flex-shrink-0 focus:outline-none"
+              >
+                {
+                  //<Image src={`/images/check.svg`} alt="✅" width={30} height={40} />
+                  'Save'
+                }
               </button>
             </div>
 
-            <div className={`code h-200`}>
-              <div className="w-full">
+            <div className={`code h-200 ml-4 mr-4`}>
+              <div className="mt-12">
                 <pre>
                   <code id="code" className={`language-${archive.language}`}>
                     {archive.content}
@@ -235,7 +242,7 @@ const Content: NextPage<Props> = ({ data, id }) => {
                 <pre>
                   <textarea
                     id="textarea"
-                    className={`codeArea h-200`}
+                    className={`codeArea h-200 mt-8`}
                     name="content"
                     value={archive.content}
                     spellCheck={false}
