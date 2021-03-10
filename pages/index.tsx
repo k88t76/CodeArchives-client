@@ -25,10 +25,10 @@ interface ResponseState {
   message: string | string[];
 }
 
-const Home: NextPage<Props> = ({ data, to }) => {
-  const [archives, setArchives] = useState(data);
-  const [token, setToken] = useState(to);
-  const [c, setC] = useState(to);
+const Home: NextPage<Props> = () => {
+  const [archives, setArchives] = useState([]);
+  const [token, setToken] = useState('');
+  const [c, setC] = useState('');
   const handleSetCookie = async () => {};
   const handleGetCookie = async () => {
     setC(await fetchCookie());
