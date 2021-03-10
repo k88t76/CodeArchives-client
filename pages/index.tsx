@@ -144,8 +144,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  //const to: string = (await fetchCookie()) || '';
-  const to = '';
+  const to: string = (await fetchCookie()) || '';
   const data: Archive[] = await fetchArchives(to);
   return {
     props: {
