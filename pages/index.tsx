@@ -8,6 +8,7 @@ import Prism from '../public/js/prism.js';
 import Search from '../components/search';
 import Contents from '../components/contents';
 import Sidebar from '../components/sidebar';
+import Cookie from 'js-cookie';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { fetchAuth, setCookie } from '../lib/auth';
@@ -76,9 +77,9 @@ const Home: NextPage<any> = ({ cookies, data }) => {
       }, 3000);
     } else {
       setResponse({ type: '', message: '' });
-      //Cookie.set('token', token, { expires: 1 / 24 });
+      Cookie.set('cookie', token, { expires: 1 });
       setToken(token);
-      setCookie(token);
+      //setCookie(token);
       setC(token);
       setArchives(await fetchArchives(token));
       Prism.highlightAll();
@@ -147,11 +148,11 @@ const Home: NextPage<any> = ({ cookies, data }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookies = req.cookies.cookie || '';
-  //const data: Archive[] = await fetchArchives(cookies);
+  const data: Archive[] = await fetchArchives(cookies);
   return {
     props: {
       cookies,
-      //   data,
+      data,
     },
   };
 };
