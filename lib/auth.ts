@@ -5,6 +5,7 @@ interface User {
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 //const url = 'http://localhost:8080';
+
 export async function fetchAuth(user: User, path: string): Promise<string | null> {
   const response = await fetch(`${url}/${path}`, {
     method: 'POST',

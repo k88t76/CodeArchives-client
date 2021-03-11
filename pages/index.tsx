@@ -12,9 +12,6 @@ import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { fetchAuth, setCookie } from '../lib/auth';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
-
 interface Props {
   data: Archive[];
   to: string;
