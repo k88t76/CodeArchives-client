@@ -31,8 +31,6 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
   const handleAlt = (path: string) => {
     if (path === 'signin') {
       return 'Sign in as a Guest?';
-    } else if (path === 'signup') {
-      return 'Back to Home';
     } else {
       return 'Sign in as your account?';
     }
