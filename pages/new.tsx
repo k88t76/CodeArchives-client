@@ -15,7 +15,7 @@ interface Props {
   name: string;
 }
 
-const New: NextPage<Props> = ({ name }) => {
+const New: NextPage<any> = ({ name, token }) => {
   const [archive, setArchive] = useState({
     content: '',
     title: '',
@@ -108,7 +108,12 @@ const New: NextPage<Props> = ({ name }) => {
   return (
     <Layout>
       <Head>
-        <title>{archive.title}</title>
+        <title>
+          {
+            //archive.title
+            token
+          }
+        </title>
       </Head>
       <header className="header">
         <HeaderLogin />
@@ -233,6 +238,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       name,
+      token,
     },
   };
 };

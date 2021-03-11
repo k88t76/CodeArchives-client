@@ -23,7 +23,7 @@ interface ResponseState {
 }
 
 const Home: NextPage<any> = ({ cookies, data }) => {
-  const [archives, setArchives] = useState(data);
+  const [archives, setArchives] = useState([]);
   const [token, setToken] = useState(cookies);
   const [c, setC] = useState(cookies);
   const handleSetCookie = async () => {
@@ -31,7 +31,7 @@ const Home: NextPage<any> = ({ cookies, data }) => {
   };
   const handleGetCookie = async () => {
     //setC(await getCookie());
-    console.log('cookie', c);
+    console.log('cookie', cookies);
   };
 
   const [response, setResponse] = useState<ResponseState>({
@@ -147,11 +147,11 @@ const Home: NextPage<any> = ({ cookies, data }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookies = req.cookies.cookie || '';
-  const data: Archive[] = await fetchArchives(cookies);
+  //const data: Archive[] = await fetchArchives(cookies);
   return {
     props: {
       cookies,
-      data,
+      //   data,
     },
   };
 };
