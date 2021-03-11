@@ -24,7 +24,7 @@ interface ResponseState {
 }
 
 const Home: NextPage<any> = ({ cookies, data }) => {
-  const [archives, setArchives] = useState([]);
+  const [archives, setArchives] = useState(data);
   const [token, setToken] = useState(cookies);
   const [c, setC] = useState(cookies);
   const handleSetCookie = async () => {
