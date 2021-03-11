@@ -28,11 +28,11 @@
 }
 
 .success {
-  @apply inline-block px-6 py-2 font-bold leading-6 text-center text-white transition bg-blue-600 rounded shadow;
+  @apply inline-block px-6 py-2 font-bold fixed top-20 z-50 leading-6 text-center text-white transition bg-blue-600 rounded shadow;
 }
 
 .error {
-  @apply inline-block px-6 py-2 font-bold leading-6 text-center text-white transition bg-red-500 rounded shadow;
+  @apply inline-block px-6 py-2 font-bold fixed top-20 leading-6 text-center text-white transition bg-red-500 rounded shadow;
 }
 
 @tailwind utilities;

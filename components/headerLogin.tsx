@@ -10,7 +10,7 @@ const HeaderLogin: React.FC = () => {
     Router.push('/');
   };
   return (
-    <>
+    <div className="header">
       <div className="flex items-center text-white">
         <span
           onClick={handleBacktoHome}
@@ -24,7 +24,7 @@ const HeaderLogin: React.FC = () => {
         <Link href="/new">
           <a
             href="#"
-            className="font-bold text-xl bg-gray-100 px-4 py-1.5 leading-none rounded text-black hover:bg-white"
+            className="font-bold text-xl bg-gray-100 px-4 py-1.5 leading-none rounded-md text-black hover:bg-white"
           >
             ＋ Add Code
           </a>
@@ -32,28 +32,13 @@ const HeaderLogin: React.FC = () => {
         <Link href="/confirm">
           <a
             href="#"
-            className="text-xl ml-4 px-3 py-1.5 bg-blue-600 leading-none rounded text-white hover:bg-blue-500 border"
+            className="text-xl ml-4 px-3 py-1 w-28 bg-blue-600 leading-none rounded-md text-white hover:bg-blue-700 border"
           >
             Sign Out
           </a>
         </Link>
       </div>
-    </>
-    /*
-      <div className="header">
-        <div className="text-center hover:cursor-pointer">
-          <p onClick={handleBacktoHome} className="logo">
-            Code Archives
-          </p>
-        </div>
-        <Link href="/new">
-          <a className="btn ">Add Code</a>
-        </Link>
-        <Link href="/confirm">
-          <a className="btn ">Sign out</a>
-        </Link>
-      </div>
-      */
+    </div>
   );
 };
 

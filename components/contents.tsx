@@ -14,7 +14,7 @@ const Contents: React.FC<Props> = ({ archives }) => {
         <li key={uuid}>
           <div className="flex font-semibold text-gray-800 w-60 ml-8 overflow-ellipsis overflow-hidden whitespace-nowrap">
             <p className="mr-1 -mb-2">{setImage(language)}</p>
-            <p>{title}</p>
+            {title}
           </div>
           <Link href={`/archives/${uuid}`}>
             <div className="container z-40">

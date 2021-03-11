@@ -32,10 +32,10 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
   };
 
   return (
-    <div className="flex fixed right-2 top-20 mr-6 transform -translate-y-0.5 z-50">
+    <div className="flex fixed right-2 top-20 mr-6 transform -translate-y-0.5 z-40">
       <form action={`${url}/search/`} method="post" onSubmit={handleSearch}>
         <input
-          className="flex z-50 text-black shadow w-72 rounded border border-gray-600 p-2 "
+          className="flex z-50 text-black shadow w-72 rounded-lg  border border-gray-600 p-2 focus:outline-none"
           id="form1"
           type="text"
           placeholder="Search"

@@ -19,7 +19,7 @@ module.exports = {
         200: '200rem',
       },
       width: {
-        160: '40rem',
+        160: '34rem',
       },
     },
   },

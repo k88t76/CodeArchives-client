@@ -5,6 +5,7 @@ import Form from '../components/form';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import { fetchAuth } from '../lib/auth';
+import Cookie from 'js-cookie';
 
 const Signup: NextPage = () => {
   const [user, setUser] = useState({
@@ -28,7 +29,7 @@ const Signup: NextPage = () => {
         message: 'The username is already used',
       });
     } else {
-      //Cookie.set('token', res, { expires: 1 });
+      Cookie.set('cookie', res, { expires: 1 });
       Router.push('/');
     }
   };

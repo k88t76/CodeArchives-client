@@ -23,17 +23,9 @@ interface ResponseState {
   message: string | string[];
 }
 
-const Home: NextPage<any> = ({ cookies, data }) => {
+const Home: NextPage<Props> = ({ data, to }) => {
   const [archives, setArchives] = useState(data);
-  const [token, setToken] = useState(cookies);
-  const [c, setC] = useState(cookies);
-  const handleSetCookie = async () => {
-    setCookie(token);
-  };
-  const handleGetCookie = async () => {
-    //setC(await getCookie());
-    console.log('cookie', cookies);
-  };
+  const [token, setToken] = useState(to);
 
   const [response, setResponse] = useState<ResponseState>({
     type: '',
@@ -80,7 +72,6 @@ const Home: NextPage<any> = ({ cookies, data }) => {
       Cookie.set('cookie', token, { expires: 1 });
       setToken(token);
       //setCookie(token);
-      setC(token);
       setArchives(await fetchArchives(token));
       Prism.highlightAll();
     }
@@ -120,24 +111,11 @@ const Home: NextPage<any> = ({ cookies, data }) => {
             <p className={`${response.type}`}>{response.message}</p>
 
             <section>
-              {
-                <div className="flex mt-6">
-                  <p>{`Cookie.Value: ${c}`}</p>
-
-                  <span className="btn" onClick={handleSetCookie}>
-                    setCookie
-                  </span>
-                  <span className="btn" onClick={handleGetCookie}>
-                    getCookie
-                  </span>
-                </div>
-              }
-
               <div className="flex-grow"></div>
               <span className="flex mr-12"></span>
               <Search setArchives={setArchives} token={token} />
-              <div className="pt-12">{archives && <Contents archives={archives} />}</div>
-              {!archives && <div className="content">Empty</div>}
+              <div className="pt-24">{archives && <Contents archives={archives} />}</div>
+              {!archives && <div className="-mt-16 ml-5 text-xl">Empty</div>}
             </section>
           </div>
         </div>
@@ -147,12 +125,12 @@ const Home: NextPage<any> = ({ cookies, data }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const cookies = req.cookies.cookie || '';
-  const data: Archive[] = await fetchArchives(cookies);
+  const to = req.cookies.cookie || '';
+  const data: Archive[] = await fetchArchives(to);
   return {
     props: {
-      cookies,
       data,
+      to,
     },
   };
 };

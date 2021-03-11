@@ -34,6 +34,8 @@ export default function setImage(language: string) {
       return <Image src={`/images/languages/${language}.svg`} alt={language} width={35} height={25} />;
     case 'html':
       return <Image src={`/images/languages/${language}.svg`} alt={language} width={35} height={25} />;
+    default:
+      return <Image src={`/images/languages/plane.svg`} alt={'📄'} width={35} height={25} />;
   }
   return;
 }

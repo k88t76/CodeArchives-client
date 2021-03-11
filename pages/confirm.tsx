@@ -2,19 +2,17 @@ import Layout from '../components/layout';
 import React from 'react';
 import { NextPage } from 'next';
 import Router from 'next/router';
-import { deleteCookie } from '../lib/auth';
+import Cookie from 'js-cookie';
 import HeaderLogin from '../components/headerLogin';
 
 const Confirm: NextPage = () => {
-  const handleSignout = async (e) => {
+  const handleSignout = (e) => {
     e.preventDefault();
-    const res = await deleteCookie();
-    if (res === 200) {
-      Router.push({
-        pathname: '/',
-        query: { type: 'success', response: 'You have signed out successfully.' },
-      });
-    }
+    Cookie.remove('cookie');
+    Router.push({
+      pathname: '/',
+      query: { type: 'success', response: 'You have signed out successfully.' },
+    });
   };
 
   const handleBacktoHome = (e) => {

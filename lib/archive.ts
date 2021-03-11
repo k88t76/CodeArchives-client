@@ -48,12 +48,15 @@ export async function fetchArchives(token: string, search?: string): Promise<Arc
   return json;
 }
 
-export async function createArchive(archive: {
-  content: string;
-  title: string;
-  author: string;
-  language: string;
-}): Promise<number | null> {
+export async function createArchive(
+  archive: {
+    content: string;
+    title: string;
+    author: string;
+    language: string;
+  },
+  id?: string
+): Promise<number | null> {
   const response = await fetch(`${url}/create`, {
     method: 'POST',
     mode: 'cors',
@@ -73,13 +76,13 @@ export async function createArchive(archive: {
 }
 
 export async function editArchive(
-  id: string,
   archive: {
     content: string;
     title: string;
     author: string;
     language: string;
-  }
+  },
+  id: string
 ): Promise<number | null> {
   const response = await fetch(`${url}/edit/${id}`, {
     method: 'PUT',
