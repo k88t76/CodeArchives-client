@@ -10,7 +10,7 @@ import Contents from '../components/contents';
 import Sidebar from '../components/sidebar';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
-import { fetchAuth, fetchCookie } from '../lib/auth';
+import { fetchAuth, setCookie } from '../lib/auth';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 //const url = 'http://localhost:8080';
@@ -25,13 +25,16 @@ interface ResponseState {
   message: string | string[];
 }
 
-const Home: NextPage<Props> = () => {
-  const [archives, setArchives] = useState([]);
-  const [token, setToken] = useState('');
-  const [c, setC] = useState('');
-  const handleSetCookie = async () => {};
+const Home: NextPage<any> = ({ cookies, data }) => {
+  const [archives, setArchives] = useState(data);
+  const [token, setToken] = useState(cookies);
+  const [c, setC] = useState(cookies);
+  const handleSetCookie = async () => {
+    setCookie(token);
+  };
   const handleGetCookie = async () => {
-    setC(await fetchCookie());
+    //setC(await getCookie());
+    console.log('cookie', c);
   };
 
   const [response, setResponse] = useState<ResponseState>({
@@ -78,6 +81,8 @@ const Home: NextPage<Props> = () => {
       setResponse({ type: '', message: '' });
       //Cookie.set('token', token, { expires: 1 / 24 });
       setToken(token);
+      setCookie(token);
+      setC(token);
       setArchives(await fetchArchives(token));
       Prism.highlightAll();
     }
@@ -141,6 +146,17 @@ const Home: NextPage<Props> = () => {
       </Layout>
     );
   }
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const cookies = req.cookies.cookie || '';
+  const data: Archive[] = await fetchArchives(cookies);
+  return {
+    props: {
+      cookies,
+      data,
+    },
+  };
 };
 
 export default Home;

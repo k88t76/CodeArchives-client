@@ -40,9 +40,28 @@ export async function fetchAuth(user: User, path: string): Promise<string | null
   return json;
 }
 
-export async function fetchCookie(): Promise<string | null> {
-  const response = await fetch(`${url}/cookie`, {
-    method: 'GET',
+export async function setCookie(token: string): Promise<number | null> {
+  const response = await fetch(`${url}/setcookie`, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify(token),
+  })
+    .then((res: Response) => res)
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
+
+  if (!response) {
+    return null;
+  }
+  return response.status;
+}
+
+export async function deleteCookie(): Promise<number | null> {
+  const response = await fetch(`${url}/deletecookie`, {
+    method: 'DELETE',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -56,20 +75,5 @@ export async function fetchCookie(): Promise<string | null> {
   if (!response) {
     return null;
   }
-
-  const json = await response
-    .json()
-    .then((json: string) => {
-      return json;
-    })
-    .catch((error) => {
-      console.error(error);
-      return null;
-    });
-
-  if (!json) {
-    return null;
-  }
-
-  return json;
+  return response.status;
 }

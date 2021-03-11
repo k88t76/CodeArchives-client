@@ -1,5 +1,5 @@
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+//const url = 'https://codearchives-server.dt.r.appspot.com';
+const url = 'http://localhost:8080';
 
 export interface Archive {
   uuid: string;
