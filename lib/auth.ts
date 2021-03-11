@@ -10,7 +10,6 @@ export async function fetchAuth(user: User, path: string): Promise<string | null
   const response = await fetch(`${url}/${path}`, {
     method: 'POST',
     mode: 'cors',
-    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   })
