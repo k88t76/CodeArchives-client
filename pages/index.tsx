@@ -11,7 +11,7 @@ import Sidebar from '../components/sidebar';
 import Cookie from 'js-cookie';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
-import { fetchAuth, setCookie } from '../lib/auth';
+import { fetchAuth } from '../lib/auth';
 
 interface Props {
   data: Archive[];

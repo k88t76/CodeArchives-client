@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Prism from '../public/js/prism.js';
 import { Archive, fetchArchives } from '../lib/archive';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
+const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   setArchives: React.Dispatch<React.SetStateAction<Archive[]>>;

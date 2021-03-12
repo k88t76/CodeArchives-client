@@ -6,8 +6,7 @@ import HeaderLogin from '../components/headerLogin';
 import Layout from '../components/layout';
 import Field from '../components/field';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   name: string;

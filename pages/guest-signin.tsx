@@ -7,8 +7,6 @@ import { fetchAuth } from '../lib/auth';
 import Cookie from 'js-cookie';
 import Form from '../components/form';
 
-const url = process.env.NEXT_PUBLIC_URL;
-
 const GuestSignin: NextPage = () => {
   const [user, setUser] = useState({
     name: 'guest-user',

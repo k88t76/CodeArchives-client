@@ -5,8 +5,6 @@ import Prism from '../public/js/prism.js';
 import { Archive, deleteArchive } from '../lib/archive';
 import setImageDetail from '../lib/setImageDetail';
 
-const url = 'http://localhost:8080';
-
 interface Props {
   id?: string;
   data: Archive;
@@ -203,7 +201,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
           </pre>
         </div>
 
-        <form id="edit" action={`${url}/edit/${id}`} method="post" onSubmit={handleSubmit}>
+        <form id="edit" method="post" onSubmit={handleSubmit}>
           <pre>
             <textarea
               id="textarea"
