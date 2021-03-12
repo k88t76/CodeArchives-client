@@ -3,12 +3,11 @@ import Layout from '../../components/layout';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Router from 'next/router';
 import HeaderLogin from '../../components/headerLogin';
-import Detail from '../../components/detali';
+import Field from '../../components/field';
 import Prism from '../../public/js/prism.js';
 import { Archive, editArchive } from '../../lib/archive';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   data: Archive;
@@ -34,7 +33,7 @@ const Content: NextPage<Props> = ({ data, id }) => {
             </div>
           </>
         )}
-        {data && <Detail id={id} data={data} submitFunction={editArchive} isCreate={false} />}
+        {data && <Field id={id} data={data} submitFunction={editArchive} isCreate={false} />}
       </div>
     </Layout>
   );

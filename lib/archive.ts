@@ -1,5 +1,4 @@
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+const url = process.env.NEXT_PUBLIC_URL;
 
 export interface Archive {
   uuid: string;

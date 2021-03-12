@@ -7,8 +7,7 @@ import { fetchAuth } from '../lib/auth';
 import Cookie from 'js-cookie';
 import Form from '../components/form';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+const url = process.env.NEXT_PUBLIC_URL;
 
 const GuestSignin: NextPage = () => {
   const [user, setUser] = useState({

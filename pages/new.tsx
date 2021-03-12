@@ -4,7 +4,7 @@ import { createArchive } from '../lib/archive';
 import { Archive } from '../lib/archive';
 import HeaderLogin from '../components/headerLogin';
 import Layout from '../components/layout';
-import Detail from '../components/detali';
+import Field from '../components/field';
 
 const url = 'https://codearchives-server.dt.r.appspot.com';
 //const url = 'http://localhost:8080';
@@ -27,7 +27,7 @@ const New: NextPage<any> = ({ name }) => {
     <Layout>
       <HeaderLogin />
       <div className="pt-24 px-5">
-        <Detail data={archive} submitFunction={createArchive} isCreate={true} />
+        <Field data={archive} submitFunction={createArchive} isCreate={true} />
       </div>
     </Layout>
   );

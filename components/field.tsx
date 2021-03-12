@@ -14,7 +14,7 @@ interface Props {
   isCreate: boolean;
 }
 
-const Detail: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
+const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
   const [archive, setArchive] = useState({
     content: data && data.content,
     title: data && data.title,
@@ -222,4 +222,4 @@ const Detail: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
   );
 };
 
-export default Detail;
+export default Field;

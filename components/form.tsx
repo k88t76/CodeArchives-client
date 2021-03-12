@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
+const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   path: string;

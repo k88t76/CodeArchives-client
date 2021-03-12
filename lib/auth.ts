@@ -3,8 +3,7 @@ interface User {
   password: string;
 }
 
-const url = 'https://codearchives-server.dt.r.appspot.com';
-//const url = 'http://localhost:8080';
+const url = process.env.NEXT_PUBLIC_URL;
 
 export async function fetchAuth(user: User, path: string): Promise<string | null> {
   const response = await fetch(`${url}/${path}`, {
