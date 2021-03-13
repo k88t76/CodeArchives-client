@@ -6,7 +6,7 @@ export default (res: NextApiResponse) => {
     'Set-Cookie',
     cookie.serialize('cookie', '', {
       httpOnly: true,
-      expires: new Date(0),
+      maxAge: 0,
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',
       path: '/',
