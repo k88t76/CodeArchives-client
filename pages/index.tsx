@@ -69,6 +69,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
         });
       }, 3000);
     } else {
+      setIsLoading(true);
       setResponse({ type: '', message: '' });
       fetch('/api/signin', {
         method: 'POST',
@@ -78,7 +79,6 @@ const Home: NextPage<Props> = ({ data, to }) => {
         body: JSON.stringify({ token: token }),
       });
       setToken(token);
-      setIsLoading(true);
       setArchives(await fetchArchives(token));
       setIsLoading(false);
       Prism.highlightAll();

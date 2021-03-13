@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import HeaderUnLogin from '../components/headerUnLogin';
 import { fetchAuth } from '../lib/auth';
 import Form from '../components/form';
+import Loading from '../components/loading';
 
 const GuestSignin: NextPage = () => {
   const [user, setUser] = useState({
@@ -13,9 +14,11 @@ const GuestSignin: NextPage = () => {
   });
 
   const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTestSignIn = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const res = await fetchAuth(user, 'guestsignin');
     fetch('/api/signin', {
       method: 'POST',
@@ -30,6 +33,7 @@ const GuestSignin: NextPage = () => {
   return (
     <Layout>
       <HeaderUnLogin />
+      <Loading isLoading={isLoading} />
       <div className="content">
         <Form path="guest-signin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
       </div>
