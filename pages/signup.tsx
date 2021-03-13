@@ -5,12 +5,15 @@ import Form from '../components/form';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import { fetchAuth } from '../lib/auth';
+import Loading from '../components/loading';
 
 const Signup: NextPage = () => {
   const [user, setUser] = useState({
     name: '',
     password: '',
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [response, setResponse] = useState({
     type: '',
@@ -28,7 +31,8 @@ const Signup: NextPage = () => {
         message: 'The username is already used',
       });
     } else {
-      fetch('/api/signin', {
+      setIsLoading(true);
+      await fetch('/api/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,6 +45,7 @@ const Signup: NextPage = () => {
   return (
     <Layout>
       <HeaderUnLogin />
+      <Loading isLoading={isLoading} />
       <div className="content">
         <p className={`${response.type}`}>{response.message}</p>
         <Form path="signup" handleSubmit={handleSignup} handleChange={handleChange} />

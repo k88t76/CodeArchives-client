@@ -27,7 +27,7 @@ const GuestSignin: NextPage = () => {
       },
       body: JSON.stringify({ token: res }),
     });
-    fetch('/api/signin', {
+    await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const GuestSignin: NextPage = () => {
       <HeaderUnLogin />
       <Loading isLoading={isLoading} />
       <div className="content">
-        <Form path="guest-signin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
+        <Form path="guestsignin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
       </div>
     </Layout>
   );
