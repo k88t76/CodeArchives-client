@@ -8,6 +8,7 @@ import Prism from '../public/js/prism.js';
 import Search from '../components/search';
 import Contents from '../components/contents';
 import Sidebar from '../components/sidebar';
+import Loading from '../components/loading';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { fetchAuth } from '../lib/auth';
@@ -25,6 +26,7 @@ interface ResponseState {
 const Home: NextPage<Props> = ({ data, to }) => {
   const [archives, setArchives] = useState(data);
   const [token, setToken] = useState(to);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [response, setResponse] = useState<ResponseState>({
     type: '',
@@ -76,7 +78,9 @@ const Home: NextPage<Props> = ({ data, to }) => {
         body: JSON.stringify({ token: token }),
       });
       setToken(token);
+      setIsLoading(true);
       setArchives(await fetchArchives(token));
+      setIsLoading(false);
       Prism.highlightAll();
     }
   };
@@ -98,6 +102,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
         <HeaderUnLogin />
         <div className="content">
           <p className={`${response.type}`}>{response.message}</p>
+          <Loading isLoading={isLoading} />
           <Form path={'signin'} handleSubmit={handleSignIn} handleChange={handleChange} />
         </div>
       </Layout>
