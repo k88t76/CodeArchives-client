@@ -2,21 +2,26 @@ import Layout from '../components/layout';
 import React from 'react';
 import { NextPage } from 'next';
 import Router from 'next/router';
-import Cookie from 'js-cookie';
 import HeaderLogin from '../components/headerLogin';
 
 const Confirm: NextPage = () => {
-  const handleSignout = (e) => {
+  const handleSignout = async (e) => {
     e.preventDefault();
-    Cookie.remove('cookie');
-    Router.push({
-      pathname: '/',
-      query: { type: 'success', response: 'You have signed out successfully.' },
+    const response = await fetch('/api/signout', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
     });
+    if (response.status === 200) {
+      Router.push({
+        pathname: '/',
+      });
+    }
   };
 
-  const handleBacktoHome = (e) => {
-    e.preventDefault();
+  const handleBacktoHome = () => {
     Router.push('/');
   };
 

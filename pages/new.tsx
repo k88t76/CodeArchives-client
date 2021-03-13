@@ -12,7 +12,7 @@ interface Props {
   name: string;
 }
 
-const New: NextPage<any> = ({ name }) => {
+const New: NextPage<Props> = ({ name }) => {
   const [archive, setArchive] = useState<Archive>({
     uuid: '',
     content: '',

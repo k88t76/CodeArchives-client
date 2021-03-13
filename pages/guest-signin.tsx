@@ -4,7 +4,6 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import HeaderUnLogin from '../components/headerUnLogin';
 import { fetchAuth } from '../lib/auth';
-import Cookie from 'js-cookie';
 import Form from '../components/form';
 
 const GuestSignin: NextPage = () => {
@@ -18,7 +17,13 @@ const GuestSignin: NextPage = () => {
   const handleTestSignIn = async (e) => {
     e.preventDefault();
     const res = await fetchAuth(user, 'guestsignin');
-    Cookie.set('cookie', res, { expires: 1 });
+    fetch('/api/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: res }),
+    });
     Router.push('/');
   };
 

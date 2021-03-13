@@ -8,7 +8,6 @@ import Prism from '../public/js/prism.js';
 import Search from '../components/search';
 import Contents from '../components/contents';
 import Sidebar from '../components/sidebar';
-import Cookie from 'js-cookie';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { fetchAuth } from '../lib/auth';
@@ -69,9 +68,14 @@ const Home: NextPage<Props> = ({ data, to }) => {
       }, 3000);
     } else {
       setResponse({ type: '', message: '' });
-      Cookie.set('cookie', token, { expires: 1 });
+      fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: token }),
+      });
       setToken(token);
-      //setCookie(token);
       setArchives(await fetchArchives(token));
       Prism.highlightAll();
     }

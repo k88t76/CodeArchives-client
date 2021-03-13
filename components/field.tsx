@@ -20,11 +20,6 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     language: data && data.language,
   });
 
-  const [response, setResponse] = useState({
-    type: '',
-    message: '',
-  });
-
   const handleChange = (e) => {
     setArchive({ ...archive, [e.target.name]: e.target.value });
     setTimeout(Prism.highlightAll, 0);
@@ -35,11 +30,6 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     const res = await submitFunction(archive, id);
     if (res === 200) {
       Router.push('/');
-    } else {
-      setResponse({
-        type: 'error',
-        message: 'Save Failure',
-      });
     }
   };
 
@@ -48,7 +38,6 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     const res = await deleteArchive(id);
     Router.push({
       pathname: '/',
-      query: { type: 'success', response: `Archive has been deleted (title: ${archive.title})` },
     });
   };
 
