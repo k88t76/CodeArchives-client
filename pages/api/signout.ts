@@ -1,16 +1,17 @@
-import { NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import cookie from 'cookie';
 
-export default (res: NextApiResponse) => {
+export default (req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader(
     'Set-Cookie',
     cookie.serialize('cookie', '', {
       httpOnly: true,
-      maxAge: 0,
+      expires: new Date(0),
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',
       path: '/',
     })
   );
   res.statusCode = 200;
+  res.json({ success: true });
 };
