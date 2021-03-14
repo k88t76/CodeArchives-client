@@ -11,7 +11,7 @@ import Sidebar from '../components/sidebar';
 import Loading from '../components/loading';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
-import { fetchAuth } from '../lib/auth';
+import { fetchAuth, setCookie } from '../lib/auth';
 
 interface Props {
   data: Archive[];
@@ -71,13 +71,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
     } else {
       setIsLoading(true);
       setResponse({ type: '', message: '' });
-      fetch('/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: token }),
-      });
+      setCookie(token);
       setToken(token);
       setArchives(await fetchArchives(token));
       setIsLoading(false);

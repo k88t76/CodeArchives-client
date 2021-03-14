@@ -5,7 +5,6 @@ import { Archive } from '../lib/archive';
 import HeaderLogin from '../components/headerLogin';
 import Layout from '../components/layout';
 import Field from '../components/field';
-import Loading from '../components/loading';
 
 const url = process.env.NEXT_PUBLIC_URL;
 
@@ -22,8 +21,6 @@ const New: NextPage<Props> = ({ name }) => {
     language: '',
     created_at: '',
   });
-
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Layout>

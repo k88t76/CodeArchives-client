@@ -37,7 +37,7 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
   };
 
   const handleValue = (path: string) => {
-    if (path === 'guestsignin') {
+    if (path === 'guest-signin') {
       var name = document.getElementById('name') as HTMLTextAreaElement;
       var password = document.getElementById('password') as HTMLTextAreaElement;
       name.value = 'guest-user';
@@ -60,7 +60,7 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
           placeholder="Username"
           name="name"
           onChange={handleChange}
-          readOnly={path === 'guestsignin' ? true : false}
+          readOnly={path === 'guest-signin' ? true : false}
           required
           className="shadow appearance-none border rounded-lg w-full py-2 px-3"
         />
@@ -68,10 +68,10 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
           <label className="block font-bold mt-6 mb-1">Password</label>
           <input
             id="password"
-            type={path === 'guestsignin' ? 'text' : 'password'}
+            type={path === 'guest-signin' ? 'text' : 'password'}
             name="password"
             placeholder="Password"
-            readOnly={path === 'guestsignin' ? true : false}
+            readOnly={path === 'guest-signin' ? true : false}
             onChange={handleChange}
             required
             className="shadow appearance-none border border-red rounded-lg w-full py-2 px-3 mb-3"

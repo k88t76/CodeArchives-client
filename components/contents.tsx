@@ -13,14 +13,14 @@ const Contents: React.FC<Props> = ({ archives }) => {
       {archives.map(({ uuid, content, title, language }) => (
         <li key={uuid}>
           <div className="flex font-semibold text-gray-800 w-60 ml-8 overflow-ellipsis overflow-hidden whitespace-nowrap">
-            <p className="mr-1 -mb-2">{setImage(language)}</p>
+            <div className="mr-1 -mb-2">{setImage(language)}</div>
             {title}
           </div>
           <Link href={`/archives/${uuid}`}>
             <div className="container z-40">
               <pre>
                 <code id="code" className={`language-${language}`}>
-                  <a href="#">{content}</a>
+                  {content}
                 </code>
               </pre>
             </div>

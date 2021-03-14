@@ -38,3 +38,25 @@ export async function fetchAuth(user: User, path: string): Promise<string | null
 
   return json;
 }
+
+export async function setCookie(token: string): Promise<Response> {
+  const response = fetch('/api/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: token }),
+  });
+  return response;
+}
+
+export async function removeCookie(): Promise<Response> {
+  const response = fetch('/api/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  });
+  return response;
+}

@@ -32,7 +32,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await submitFunction(archive, id);
-    if (res === 200) {
+    if (res === 201) {
       Router.push('/');
     }
   };
@@ -41,9 +41,11 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await deleteArchive(id);
-    Router.push({
-      pathname: '/',
-    });
+    if (res == 204) {
+      Router.push({
+        pathname: '/',
+      });
+    }
   };
 
   const handleAlert = async (e) => {
@@ -97,7 +99,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       <Loading isLoading={isLoading} />
       <div onLoad={handleSetSelected}>
         <div className="toolbar flex z-50 -ml-5 pl-3 py-3 fixed bg-white w-screen">
-          <p className="mt-2 pl-4 mr-4 w-16 flex-shrink-0">{setImageDetail(archive.language)}</p>
+          <div className="mt-2 pl-4 mr-4 w-16 flex-shrink-0">{setImageDetail(archive.language)}</div>
           <input
             type="text"
             name="title"

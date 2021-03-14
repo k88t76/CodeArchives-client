@@ -56,7 +56,7 @@ export async function createArchive(
   },
   id?: string
 ): Promise<number | null> {
-  const response = await fetch(`${url}/create`, {
+  const response = await fetch(`${url}/archive/`, {
     method: 'POST',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
@@ -83,7 +83,7 @@ export async function editArchive(
   },
   id: string
 ): Promise<number | null> {
-  const response = await fetch(`${url}/edit/${id}`, {
+  const response = await fetch(`${url}/archive/${id}`, {
     method: 'PUT',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
@@ -102,7 +102,7 @@ export async function editArchive(
 }
 
 export async function deleteArchive(id: string): Promise<number | null> {
-  const response = await fetch(`${url}/delete/${id}`, {
+  const response = await fetch(`${url}/archive/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     mode: 'cors',

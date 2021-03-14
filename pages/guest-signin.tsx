@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import HeaderUnLogin from '../components/headerUnLogin';
-import { fetchAuth } from '../lib/auth';
+import { fetchAuth, setCookie } from '../lib/auth';
 import Form from '../components/form';
 import Loading from '../components/loading';
 
@@ -19,21 +19,8 @@ const GuestSignin: NextPage = () => {
   const handleTestSignIn = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const res = await fetchAuth(user, 'guestsignin');
-    fetch('/api/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: res }),
-    });
-    await fetch('/api/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: res }),
-    });
+    const res = await fetchAuth(user, 'guest-signin');
+    await setCookie(res);
     Router.push('/');
   };
 
@@ -42,7 +29,7 @@ const GuestSignin: NextPage = () => {
       <HeaderUnLogin />
       <Loading isLoading={isLoading} />
       <div className="content">
-        <Form path="guestsignin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
+        <Form path="guest-signin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
       </div>
     </Layout>
   );

@@ -4,7 +4,7 @@ import HeaderUnLogin from '../components/headerUnLogin';
 import Form from '../components/form';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { fetchAuth } from '../lib/auth';
+import { fetchAuth, setCookie } from '../lib/auth';
 import Loading from '../components/loading';
 
 const Signup: NextPage = () => {
@@ -32,13 +32,7 @@ const Signup: NextPage = () => {
       });
     } else {
       setIsLoading(true);
-      await fetch('/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: res }),
-      });
+      await setCookie(res);
       Router.push('/');
     }
   };
