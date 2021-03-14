@@ -21,6 +21,9 @@ const HeaderLogin: React.FC = () => {
   const handleAddCode = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    if (router.pathname === '/new') {
+      setIsLoading(false);
+    }
     Router.push('/new');
   };
   return (
