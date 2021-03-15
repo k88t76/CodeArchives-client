@@ -47,16 +47,6 @@ body {
   font-size: 18px;
 }
 
-a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
 .container {
   border: 0.5px solid gray;
   background-color: #fdfdfd;

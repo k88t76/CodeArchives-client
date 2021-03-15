@@ -27,7 +27,6 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
 
   const handleChange = (e) => {
     setArchive({ ...archive, [e.target.name]: e.target.value });
-    setTimeout(Prism.highlightAll, 0);
   };
 
   const handleSubmit = async (e) => {
@@ -66,7 +65,9 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     });
     const target = document.getElementById('code') as HTMLDivElement;
     target.className = 'language-' + lan;
-    Prism.highlightAll();
+    if (lan == 'text') {
+      target.className = '';
+    }
   };
 
   const handleKeydown = (e) => {
@@ -98,7 +99,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
 
   useEffect(() => {
     Prism.highlightAll();
-  }, []);
+  }, [archive]);
 
   return (
     <>
@@ -170,7 +171,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
             <option id="html" value="html">
               HTML
             </option>
-            <option id="text" value="">
+            <option id="text" value="text">
               TEXT
             </option>
           </select>

@@ -19,7 +19,6 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
     e.preventDefault();
     const data = await fetchArchives(token, search);
     setArchives(data);
-    Prism.highlightAll();
   };
 
   const cancelSearch = async (e) => {
@@ -28,7 +27,6 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
     textForm.value = '';
     const data = await fetchArchives(token);
     setArchives(data);
-    Prism.highlightAll();
   };
 
   return (

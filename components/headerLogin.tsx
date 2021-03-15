@@ -14,7 +14,6 @@ const HeaderLogin: React.FC = () => {
     if (router.pathname === '/') {
       setIsLoading(false);
     }
-    setTimeout(Prism.highlightAll, 0);
     Router.push('/');
   };
 

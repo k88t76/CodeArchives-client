@@ -4,7 +4,6 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Router from 'next/router';
 import HeaderLogin from '../../components/headerLogin';
 import Field from '../../components/field';
-import Prism from '../../public/js/prism.js';
 import { Archive, editArchive } from '../../lib/archive';
 
 const url = process.env.NEXT_PUBLIC_URL;
@@ -17,7 +16,6 @@ interface Props {
 const Content: NextPage<Props> = ({ data, id }) => {
   const handleBacktoHome = (e) => {
     e.preventDefault();
-    setTimeout(Prism.highlightAll, 0);
     Router.push('/');
   };
 

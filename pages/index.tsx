@@ -45,7 +45,6 @@ const Home: NextPage<Props> = ({ data, to }) => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     const token = await fetchAuth(user, 'signin');
-    console.log(token);
     if (token === 'Unknown User') {
       setResponse({
         type: 'error',
@@ -75,7 +74,6 @@ const Home: NextPage<Props> = ({ data, to }) => {
       setToken(token);
       setArchives(await fetchArchives(token));
       setIsLoading(false);
-      Prism.highlightAll();
     }
   };
 
@@ -88,7 +86,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
       });
     }, 3000);
     Prism.highlightAll();
-  }, []);
+  }, [archives]);
 
   if (token === '') {
     return (
