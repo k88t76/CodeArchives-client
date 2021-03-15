@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Search: React.FC<Props> = ({ setArchives, token }) => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState<string>('');
 
   const handleChange = (e) => setSearch(e.target.value);
 

@@ -5,8 +5,8 @@ const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   path: string;
-  handleSubmit: (e: any) => Promise<void>;
-  handleChange: (e: any) => void;
+  handleSubmit: (e) => Promise<void>;
+  handleChange: (e) => void;
 }
 
 export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {

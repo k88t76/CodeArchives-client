@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import Router, { NextRouter, useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Loading from '../components/loading';
 import Prism from '../public/js/prism.js';
 
 const HeaderLogin: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router: NextRouter = useRouter();
 
-  const handleBacktoHome = (e: { preventDefault: () => void }) => {
+  const handleBacktoHome = (e) => {
     e.preventDefault();
     setIsLoading(true);
     if (router.pathname === '/') {

@@ -14,11 +14,13 @@ interface Props {
 }
 
 const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
-  const [archive, setArchive] = useState({
+  const [archive, setArchive] = useState<Archive>({
+    uuid: data && data.uuid,
     content: data && data.content,
     title: data && data.title,
     author: data && data.author,
     language: data && data.language,
+    created_at: data && data.created_at,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -55,10 +57,12 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
   const handleLanguage = () => {
     const lan = (document.getElementById('language') as HTMLSelectElement).value;
     setArchive({
+      uuid: archive.uuid,
       content: archive.content,
       title: archive.title,
       author: archive.author,
       language: lan,
+      created_at: archive.created_at,
     });
     const target = document.getElementById('code') as HTMLDivElement;
     target.className = 'language-' + lan;
@@ -72,10 +76,12 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       const pos = textarea.selectionStart;
       textarea.value = textarea.value.substr(0, pos) + '\t' + textarea.value.substr(pos);
       setArchive({
+        uuid: archive.uuid,
         content: textarea.value,
         title: archive.title,
         author: archive.author,
         language: archive.language,
+        created_at: archive.created_at,
       });
       setTimeout(Prism.highlightAll, 0);
       textarea.focus();

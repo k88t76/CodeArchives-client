@@ -1,9 +1,9 @@
-interface User {
+const url = process.env.NEXT_PUBLIC_URL;
+
+export interface User {
   name: string;
   password: string;
 }
-
-const url = process.env.NEXT_PUBLIC_URL;
 
 export async function fetchAuth(user: User, path: string): Promise<string | null> {
   const response = await fetch(`${url}/${path}`, {

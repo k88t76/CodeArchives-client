@@ -4,18 +4,23 @@ import HeaderUnLogin from '../components/headerUnLogin';
 import Form from '../components/form';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { fetchAuth, setCookie } from '../lib/auth';
+import { User, fetchAuth, setCookie } from '../lib/auth';
 import Loading from '../components/loading';
 
+interface ResponseState {
+  type: string | string[];
+  message: string | string[];
+}
+
 const Signup: NextPage = () => {
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     name: '',
     password: '',
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [response, setResponse] = useState({
+  const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
   });

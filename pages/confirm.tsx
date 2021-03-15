@@ -6,7 +6,7 @@ import HeaderLogin from '../components/headerLogin';
 import Loading from '../components/loading';
 
 const Confirm: NextPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSignout = async (e) => {
     e.preventDefault();

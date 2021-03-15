@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Router, { useRouter } from 'next/router';
+import Router, { NextRouter, useRouter } from 'next/router';
 import Loading from '../components/loading';
 
 const HeaderUnLogin: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router: NextRouter = useRouter();
 
   const handleBackToHome = (e) => {
     e.preventDefault();

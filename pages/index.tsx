@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import HeaderUnLogin from '../components/headerUnLogin';
 import HeaderLogin from '../components/headerLogin';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import Layout from '../components/layout';
 import Prism from '../public/js/prism.js';
 import Search from '../components/search';
@@ -11,7 +11,7 @@ import Sidebar from '../components/sidebar';
 import Loading from '../components/loading';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
-import { fetchAuth, setCookie } from '../lib/auth';
+import { User, fetchAuth, setCookie } from '../lib/auth';
 
 interface Props {
   data: Archive[];
@@ -24,18 +24,18 @@ interface ResponseState {
 }
 
 const Home: NextPage<Props> = ({ data, to }) => {
-  const [archives, setArchives] = useState(data);
-  const [token, setToken] = useState(to);
-  const [isLoading, setIsLoading] = useState(false);
+  const [archives, setArchives] = useState<Archive[]>(data);
+  const [token, setToken] = useState<string>(to);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
   });
 
-  const { query } = useRouter();
+  const { query }: NextRouter = useRouter();
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     name: '',
     password: '',
   });

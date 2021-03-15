@@ -3,18 +3,19 @@ import { NextPage } from 'next';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import HeaderUnLogin from '../components/headerUnLogin';
-import { fetchAuth, setCookie } from '../lib/auth';
+import { User, fetchAuth, setCookie } from '../lib/auth';
 import Form from '../components/form';
 import Loading from '../components/loading';
 
 const GuestSignin: NextPage = () => {
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     name: 'guest-user',
     password: 'guest',
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleTestSignIn = async (e) => {
     e.preventDefault();
