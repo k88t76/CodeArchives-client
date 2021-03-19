@@ -95,6 +95,25 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       const option = document.getElementById(`${archive.language}`) as HTMLOptionElement;
       option.selected = true;
     }
+
+    const codearea = document.getElementById('code');
+    const textarea = document.getElementById('textarea');
+    textarea.style.width = codearea.style.width;
+  };
+
+  const handleScroll = () => {
+    const codearea = document.getElementById('code');
+    const textarea = document.getElementById('textarea');
+    // エレメントがスクロールされたときの関数。
+    codearea.addEventListener('scroll', () => {
+      textarea.scrollTop = codearea.scrollTop;
+      textarea.scrollLeft = codearea.scrollLeft;
+    });
+
+    textarea.addEventListener('scroll', () => {
+      codearea.scrollTop = textarea.scrollTop;
+      codearea.scrollLeft = textarea.scrollLeft;
+    });
   };
 
   useEffect(() => {
@@ -197,28 +216,28 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
           </button>
         </div>
 
-        <div className={`code h-200 ml-4 mr-4`}>
-          <div className="mt-12">
-            <pre>
-              <code id="code" className={`language-${archive.language}`}>
+        <div className={`code ml-4 mt-8 w-11/12`}>
+          <div className="mt-12 -mr-9">
+            <pre className="h-39">
+              <code id="code" className={`language-${archive.language} w-full  overflow-scroll`}>
                 {archive.content}
               </code>
             </pre>
           </div>
 
           <form id="edit" method="post" onSubmit={handleSubmit}>
-            <pre>
-              <textarea
-                id="textarea"
-                className={`codeArea h-200 mt-8`}
-                name="content"
-                value={archive.content}
-                spellCheck={false}
-                autoFocus={true}
-                onChange={handleChange}
-                onKeyDown={handleKeydown}
-              />
-            </pre>
+            <textarea
+              id="textarea"
+              className={`codeArea overflow-scroll w-11/12 h-39 mt-8  resize-none`}
+              name="content"
+              value={archive.content}
+              spellCheck={false}
+              autoFocus={true}
+              wrap="off"
+              onChange={handleChange}
+              onKeyDown={handleKeydown}
+              onScroll={handleScroll}
+            />
           </form>
         </div>
       </div>

@@ -8,6 +8,7 @@ interface Props {
 }
 
 const Contents: React.FC<Props> = ({ archives }) => {
+  console.log('Contents');
   return (
     <ul className="flex flex-wrap items-center pt-4 z-40">
       {archives.map(({ uuid, content, title, language }) => (

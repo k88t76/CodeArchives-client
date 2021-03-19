@@ -19,10 +19,14 @@ const Content: NextPage<Props> = ({ data, id }) => {
     Router.push('/');
   };
 
+  const handleOnLoad = () => {
+    //document.body.style.overflow = 'hidden';
+  };
+
   return (
     <Layout>
       <HeaderLogin />
-      <div className="pt-24 px-5">
+      <div onLoad={handleOnLoad} className="pt-24 px-5">
         {!data && (
           <>
             <div>This Archive has already been deleted.</div>

@@ -24,7 +24,7 @@
 }
 
 .codeArea {
-  @apply absolute top-28 -mt-2 pl-2 w-screen text-transparent bg-transparent outline-none overflow-hidden;
+  @apply absolute top-28 -mt-2 pl-2 text-transparent bg-transparent outline-none overflow-hidden;
 }
 
 .success {
@@ -71,10 +71,6 @@ body {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 1em;
   text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
   line-height: 1.5;
 }
 
@@ -88,4 +84,8 @@ body {
 
 .toolbar {
   margin-top: -100px;
+}
+
+.z {
+  z-index: 60;
 }
