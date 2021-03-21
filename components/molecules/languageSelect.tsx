@@ -1,27 +1,12 @@
 import React, { memo, useEffect } from 'react';
 
 interface Props {
-  onChangeLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   language: string;
 }
 
-export const LanguageSelect: React.VFC<Props> = memo(({ onChangeLanguage, language }) => {
-  const handleSetSelected = () => {
-    if (language !== '') {
-      const option = document.getElementById(`${language}`) as HTMLOptionElement;
-      option.selected = true;
-    }
-  };
-
-  useEffect(() => {
-    handleSetSelected();
-  }, []);
+export const LanguageSelect: React.VFC<Props> = memo(({ language }) => {
   return (
-    <select
-      id="language"
-      className="flex z-50 mt-0.5 mr-6 border-2 sm:w-64 w-20 px-2 h-10 rounded"
-      onChange={onChangeLanguage}
-    >
+    <>
       {language === '' && <option>Language</option>}
       <option id="go" value="go">
         Go
@@ -74,6 +59,6 @@ export const LanguageSelect: React.VFC<Props> = memo(({ onChangeLanguage, langua
       <option id="text" value="text">
         TEXT
       </option>
-    </select>
+    </>
   );
 });

@@ -14,7 +14,7 @@ interface Props {
   isCreate: boolean;
 }
 
-const Field: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) => {
+const Field: React.VFC<Props> = ({ id, data, submitFunction, isCreate }) => {
   const [archive, setArchive] = useState<Archive>({
     uuid: data && data.uuid,
     content: data && data.content,
@@ -100,6 +100,10 @@ const Field: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) =>
       codearea.scrollLeft = textarea.scrollLeft;
     });
   };
+
+  useEffect(() => {
+    handleSetSelected();
+  }, []);
 
   useEffect(() => {
     Prism.highlightAll();
@@ -204,7 +208,7 @@ const Field: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) =>
         <div className={`code ml-4 mt-8 w-11/12`}>
           <div className="mt-12 -mr-9">
             <pre className="h-39">
-              <code id="code" className={`language-${archive.language} w-full  overflow-scroll whitespace-nowrap`}>
+              <code id="code" className={`language-${archive.language} w-full  overflow-scroll`}>
                 {archive.content}
               </code>
             </pre>
@@ -228,6 +232,6 @@ const Field: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) =>
       </div>
     </>
   );
-});
+};
 
 export default Field;
