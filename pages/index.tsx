@@ -12,6 +12,7 @@ import Loading from '../components/loading';
 import { Archive, fetchArchives } from '../lib/archive';
 import Form from '../components/form';
 import { User, fetchAuth, setCookie } from '../lib/auth';
+import { PrimaryButton } from '../components/atoms/PrimaryButton';
 
 interface Props {
   data: Archive[];
@@ -96,6 +97,7 @@ const Home: NextPage<Props> = ({ data, to }) => {
           <p className={`${response.type}`}>{response.message}</p>
           <Loading isLoading={isLoading} />
           <Form path={'signin'} handleSubmit={handleSignIn} handleChange={handleChange} />
+          <PrimaryButton onClick={() => {}}>ボタン</PrimaryButton>
         </div>
       </Layout>
     );
