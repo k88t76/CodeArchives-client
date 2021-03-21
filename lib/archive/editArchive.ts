@@ -16,7 +16,7 @@ export async function editArchive(
     body: JSON.stringify(archive),
   })
     .then((res: Response) => res)
-    .catch((error: React.ErrorInfo) => {
+    .catch((error) => {
       console.error(error);
       return null;
     });

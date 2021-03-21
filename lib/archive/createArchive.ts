@@ -16,7 +16,7 @@ export async function createArchive(
     body: JSON.stringify(archive),
   })
     .then((res: Response) => res)
-    .catch((error: React.ErrorInfo) => {
+    .catch((error) => {
       console.error(error);
       return null;
     });

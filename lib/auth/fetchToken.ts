@@ -10,7 +10,7 @@ export async function fetchToken(user: User, path: string): Promise<string | nul
     body: JSON.stringify(user),
   })
     .then((res: Response) => res)
-    .catch((error: React.ErrorInfo) => {
+    .catch((error) => {
       console.error(error);
       return null;
     });

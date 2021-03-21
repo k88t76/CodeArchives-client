@@ -7,7 +7,7 @@ export async function deleteArchive(id: string): Promise<number | null> {
     mode: 'cors',
   })
     .then((res: Response) => res)
-    .catch((error: React.ErrorInfo) => {
+    .catch((error) => {
       console.error(error);
       return null;
     });
