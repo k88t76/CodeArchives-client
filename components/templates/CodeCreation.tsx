@@ -3,13 +3,15 @@ import Router from 'next/router';
 import Prism from '../../public/js/prism.js';
 import { SetImageDetail } from '../atoms/SetImageDetail';
 import { Loading } from '../atoms/Loading';
-import { CodeArea } from '../organisms/CodeArea';
+
 import { LanguageSelect } from '../molecules/LanguageSelect';
-import { DeleteButton } from '../atoms/DeleteButton';
+
 import { TitleInput } from '../molecules/TitleInput';
 import { SaveButton } from '../atoms/SaveButton';
 import { Archive } from '../../types/archive';
 import { deleteArchive } from '../../lib/archive/deleteArchive';
+import { CodeArea } from '../organisms/codeArea';
+import { DeleteButton } from '../atoms/deleteButton';
 
 interface Props {
   id?: string;
