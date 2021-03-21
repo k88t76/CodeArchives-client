@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { ChangeEvent, Dispatch, memo, SetStateAction } from 'react';
 import Link from 'next/link';
-import setImage from '../lib/setImage';
-import { Archive } from '../lib/archive';
+import setImage from '../../lib/setImage';
+import { Archive } from '../../lib/archive';
 
 interface Props {
   archives: Archive[];
 }
 
-const Contents: React.FC<Props> = ({ archives }) => {
-  console.log('Contents');
+const Contents: React.VFC<Props> = memo(({ archives }) => {
   return (
     <ul className="flex flex-wrap items-center pt-4 z-40">
       {archives.map(({ uuid, content, title, language }) => (
@@ -30,6 +29,6 @@ const Contents: React.FC<Props> = ({ archives }) => {
       ))}
     </ul>
   );
-};
+});
 
 export default Contents;

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, memo, KeyboardEventHandler } from 'react';
 import Image from 'next/image';
 import Router from 'next/router';
 import Prism from '../public/js/prism.js';
 import { Archive, deleteArchive } from '../lib/archive';
 import setImageDetail from '../lib/setImageDetail';
 import Loading from '../components/loading';
+import { useMessage } from '../hooks/useMessage';
 
 interface Props {
   id?: string;
@@ -13,7 +14,7 @@ interface Props {
   isCreate: boolean;
 }
 
-const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
+const Field: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) => {
   const [archive, setArchive] = useState<Archive>({
     uuid: data && data.uuid,
     content: data && data.content,
@@ -25,11 +26,13 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const { showMessage } = useMessage();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setArchive({ ...archive, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await submitFunction(archive, id);
@@ -38,7 +41,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     }
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await deleteArchive(id);
@@ -51,18 +54,12 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
 
   const handleAlert = async (e) => {
     e.preventDefault();
+    showMessage({ title: '新規コードは削除できません', status: 'error' });
   };
 
   const handleLanguage = () => {
     const lan = (document.getElementById('language') as HTMLSelectElement).value;
-    setArchive({
-      uuid: archive.uuid,
-      content: archive.content,
-      title: archive.title,
-      author: archive.author,
-      language: lan,
-      created_at: archive.created_at,
-    });
+    setArchive({ ...archive, language: lan });
     const target = document.getElementById('code') as HTMLDivElement;
     target.className = 'language-' + lan;
     if (lan == 'text') {
@@ -70,21 +67,13 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     }
   };
 
-  const handleKeydown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     var textarea = document.getElementById('textarea') as HTMLTextAreaElement;
     if (e.keyCode === 9) {
       e.preventDefault();
       const pos = textarea.selectionStart;
       textarea.value = textarea.value.substr(0, pos) + '\t' + textarea.value.substr(pos);
-      setArchive({
-        uuid: archive.uuid,
-        content: textarea.value,
-        title: archive.title,
-        author: archive.author,
-        language: archive.language,
-        created_at: archive.created_at,
-      });
-      setTimeout(Prism.highlightAll, 0);
+      setArchive({ ...archive, content: textarea.value });
       textarea.focus();
       textarea.setSelectionRange(pos + 1, pos + 1);
     }
@@ -95,16 +84,12 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       const option = document.getElementById(`${archive.language}`) as HTMLOptionElement;
       option.selected = true;
     }
-
-    const codearea = document.getElementById('code');
-    const textarea = document.getElementById('textarea');
-    textarea.style.width = codearea.style.width;
   };
 
   const handleScroll = () => {
     const codearea = document.getElementById('code');
     const textarea = document.getElementById('textarea');
-    // エレメントがスクロールされたときの関数。
+
     codearea.addEventListener('scroll', () => {
       textarea.scrollTop = codearea.scrollTop;
       textarea.scrollLeft = codearea.scrollLeft;
@@ -219,7 +204,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
         <div className={`code ml-4 mt-8 w-11/12`}>
           <div className="mt-12 -mr-9">
             <pre className="h-39">
-              <code id="code" className={`language-${archive.language} w-full  overflow-scroll`}>
+              <code id="code" className={`language-${archive.language} w-full  overflow-scroll whitespace-nowrap`}>
                 {archive.content}
               </code>
             </pre>
@@ -235,7 +220,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
               autoFocus={true}
               wrap="off"
               onChange={handleChange}
-              onKeyDown={handleKeydown}
+              onKeyDown={handleKeyDown}
               onScroll={handleScroll}
             />
           </form>
@@ -243,6 +228,6 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       </div>
     </>
   );
-};
+});
 
 export default Field;

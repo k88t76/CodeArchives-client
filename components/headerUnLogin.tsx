@@ -15,6 +15,23 @@ const HeaderUnLogin: React.FC = () => {
     }
     Router.push('/');
   };
+
+  const handlePath = () => {
+    if (router.pathname === '/') {
+      return '/signup';
+    } else {
+      return '/';
+    }
+  };
+
+  const handleButton = () => {
+    if (router.pathname === '/') {
+      return 'Sign Up';
+    } else {
+      return 'Sign In';
+    }
+  };
+
   return (
     <>
       <Loading isLoading={isLoading} />
@@ -28,12 +45,12 @@ const HeaderUnLogin: React.FC = () => {
           </span>
         </div>
         <div className="flex-grow"></div>
-        <Link href="/signup">
+        <Link href={router.pathname === '/' ? '/signup' : '/'}>
           <a
             href="#"
             className="text-xl text-center py-1 w-28 bg-blue-600  rounded text-white hover:bg-blue-700 border"
           >
-            Sign Up
+            {router.pathname === '/' ? 'Sign Up' : 'Sign In'}
           </a>
         </Link>
       </div>

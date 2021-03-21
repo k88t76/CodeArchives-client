@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, MouseEventHandler } from 'react';
 import Layout from '../../components/layout';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Router from 'next/router';
@@ -14,19 +14,15 @@ interface Props {
 }
 
 const Content: NextPage<Props> = ({ data, id }) => {
-  const handleBacktoHome = (e) => {
+  const handleBacktoHome = (e: React.MouseEvent) => {
     e.preventDefault();
     Router.push('/');
-  };
-
-  const handleOnLoad = () => {
-    //document.body.style.overflow = 'hidden';
   };
 
   return (
     <Layout>
       <HeaderLogin />
-      <div onLoad={handleOnLoad} className="pt-24 px-5">
+      <div className="pt-24 px-5">
         {!data && (
           <>
             <div>This Archive has already been deleted.</div>

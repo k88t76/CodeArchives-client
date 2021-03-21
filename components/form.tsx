@@ -1,15 +1,16 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { ChangeEventHandler, memo, useEffect, useState } from 'react';
+import { PrimaryButton } from './atoms/PrimaryButton';
 
 const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   path: string;
-  handleSubmit: (e) => Promise<void>;
-  handleChange: (e) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
+export const Form: React.VFC<Props> = memo(({ path, handleSubmit, handleChange }) => {
   const handleTitle = (path: string) => {
     if (path === 'signin') {
       return 'PLEASE SIGN IN';
@@ -79,7 +80,7 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
         </div>
         <div className="flex items-center justify-between">
           <Link href={path === 'signin' ? '/guest-signin' : '/'}>
-            <a className="inline-block font-bold text-sm text-gray-500 ml-0.5 hover:text-blue-500">{handleAlt(path)}</a>
+            <a className="inline-block font-bold text-md text-gray-500 ml-0.5 hover:text-blue-500">{handleAlt(path)}</a>
           </Link>
           <button
             type="submit"
@@ -91,6 +92,6 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
       </form>
     </div>
   );
-};
+});
 
 export default Form;

@@ -13,6 +13,7 @@ interface Props {
 }
 
 const New: NextPage<Props> = ({ name }) => {
+  console.log(name);
   const [archive, setArchive] = useState<Archive>({
     uuid: '',
     content: '',
