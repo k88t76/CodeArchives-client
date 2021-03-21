@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import React from 'react';
-import { Archive } from '../lib/archive';
+import React, { memo } from 'react';
+import { Archive } from '../../types/archive';
 
 interface Props {
   archives: Archive[];
 }
 
-const Sidebar: React.FC<Props> = ({ archives }) => {
+export const Sidebar: React.VFC<Props> = memo(({ archives }) => {
   return (
     <div className="sm:inline-block hidden">
       <aside className="sidebar pb-12 bg-gray-100 flex-shrink-0 h-screen sticky overflow-y-scroll top-0">
@@ -29,6 +29,4 @@ const Sidebar: React.FC<Props> = ({ archives }) => {
       </aside>
     </div>
   );
-};
-
-export default Sidebar;
+});

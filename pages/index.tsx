@@ -1,132 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
-import HeaderUnLogin from '../components/headerUnLogin';
-import HeaderLogin from '../components/headerLogin';
-import { NextRouter, useRouter } from 'next/router';
-import Layout from '../components/layout';
+import { SignInLayout } from '../components/templates/SignInLayout';
+import { UnSignInLayout } from '../components/templates/UnSignInLayout';
 import Prism from '../public/js/prism.js';
-import Search from '../components/search';
-import Contents from '../components/contents';
-import Sidebar from '../components/sidebar';
-import Loading from '../components/loading';
-import { Archive, fetchArchives } from '../lib/archive';
-import Form from '../components/form';
-import { User, fetchAuth, setCookie } from '../lib/auth';
+import { Search } from '../components/molecules/Search';
+import { Contents } from '../components/organisms/Contents';
+import { Sidebar } from '../components/organisms/Sidebar';
+import { Loading } from '../components/atoms/Loading';
+import { Form } from '../components/organisms/Form';
+import { useSignIn } from '../hooks/useSignIn';
+import { Archive } from '../types/archive';
+import { User } from '../types/user';
+import { ResponseState } from '../types/response';
+import { fetchArchives } from '../lib/archive/fetchArchives';
 
 interface Props {
   data: Archive[];
   to: string;
 }
 
-interface ResponseState {
-  type: string | string[];
-  message: string | string[];
-}
-
-const Home: NextPage<Props> = ({ data, to }) => {
+const Home: NextPage<Props> = memo(({ data, to }) => {
   const [archives, setArchives] = useState<Archive[]>(data);
   const [token, setToken] = useState<string>(to);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
   });
-
-  const { query }: NextRouter = useRouter();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
     name: '',
     password: '',
   });
-
-  const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    const token = await fetchAuth(user, 'signin');
-    if (token === 'Unknown User') {
-      setResponse({
-        type: 'error',
-        message: 'The user is not registered',
-      });
-      setTimeout(() => {
-        setResponse({
-          type: '',
-          message: '',
-        });
-      }, 3000);
-    } else if (token === 'Wrong Password') {
-      setResponse({
-        type: 'error',
-        message: 'The password is incorrect',
-      });
-      setTimeout(() => {
-        setResponse({
-          type: '',
-          message: '',
-        });
-      }, 3000);
-    } else {
-      setIsLoading(true);
-      setResponse({ type: '', message: '' });
-      setCookie(token);
-      setToken(token);
-      setArchives(await fetchArchives(token));
-      setIsLoading(false);
-    }
-  };
+  const { signIn } = useSignIn();
 
   useEffect(() => {
-    setResponse({ type: query.type, message: query.response });
-    setTimeout(() => {
-      setResponse({
-        type: '',
-        message: '',
-      });
-    }, 3000);
     Prism.highlightAll();
   }, [archives]);
 
   if (token === '') {
     return (
-      <Layout>
-        <HeaderUnLogin />
+      <UnSignInLayout>
         <div className="content">
-          <p className={`${response.type}`}>{response.message}</p>
           <Loading isLoading={isLoading} />
-          <Form path={'signin'} handleSubmit={handleSignIn} handleChange={handleChange} />
+          <p className={`${response.type}`}>{response.message}</p>
+          <Form
+            path="signin"
+            handleSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+              signIn(user, setIsLoading, setToken, setArchives, setResponse, e);
+            }}
+            handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
+          />
         </div>
-      </Layout>
+      </UnSignInLayout>
     );
   } else {
     return (
-      <Layout>
-        <div className="header">
-          <HeaderLogin />
-        </div>
+      <SignInLayout>
+        <p className={`${response.type}`}>{response.message}</p>
         <div className="flex">
           {archives && <Sidebar archives={archives} />}
-
           <div className="content">
-            <p className={`${response.type}`}>{response.message}</p>
-
-            <section>
-              <div className="flex-grow"></div>
-              <span className="flex mr-12"></span>
-              <Search setArchives={setArchives} token={token} />
-              <div className="pt-24">{archives && <Contents archives={archives} />}</div>
-              {!archives && <div className="-mt-16 ml-5 text-xl">Empty</div>}
-            </section>
+            <div className="flex-grow"></div>
+            <span className="flex mr-12"></span>
+            <Search setArchives={setArchives} token={token} />
+            <div className="pt-24">{archives && <Contents archives={archives} />}</div>
+            {!archives && <div className="-mt-16 ml-5 text-xl">Empty</div>}
           </div>
         </div>
-      </Layout>
+      </SignInLayout>
     );
   }
-};
+});
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const to = req.cookies.cookie || '';
+  const to: string = req.cookies.cookie || '';
   const data: Archive[] = await fetchArchives(to);
   return {
     props: {

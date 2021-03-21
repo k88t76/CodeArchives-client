@@ -1,5 +1,5 @@
-import React, { Dispatch, memo, SetStateAction } from 'react';
-import { Archive } from '../../lib/archive';
+import React, { Dispatch, memo, SetStateAction, useEffect } from 'react';
+import { Archive } from '../../types/archive';
 
 interface Props {
   archive: Archive;
@@ -35,6 +35,7 @@ export const CodeArea: React.VFC<Props> = memo(({ archive, setArchive, onSubmit,
       codearea.scrollLeft = textarea.scrollLeft;
     });
   };
+
   return (
     <div className={`code ml-4 mt-8 w-11/12`}>
       <div className="mt-12 -mr-9">
@@ -48,7 +49,7 @@ export const CodeArea: React.VFC<Props> = memo(({ archive, setArchive, onSubmit,
       <form id="edit" method="post" onSubmit={onSubmit}>
         <textarea
           id="textarea"
-          className={`codeArea overflow-scroll w-11/12 h-39 mt-8  resize-none`}
+          className={`codeArea overflow-scroll w-11/12 h-39 mt-8 resize-none`}
           name="content"
           value={archive.content}
           spellCheck={false}

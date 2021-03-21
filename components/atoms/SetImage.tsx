@@ -1,6 +1,11 @@
 import Image from 'next/image';
+import React, { memo } from 'react';
 
-export default function setImage(language: string) {
+interface Props {
+  language: string;
+}
+
+export const SetImage: React.VFC<Props> = memo(({ language }) => {
   switch (language) {
     case 'go':
       return <Image src={`/images/languages/${language}.svg`} alt={language} width={35} height={30} />;
@@ -37,5 +42,4 @@ export default function setImage(language: string) {
     default:
       return <Image src={`/images/languages/plane.svg`} alt={'📄'} width={35} height={25} />;
   }
-  return;
-}
+});

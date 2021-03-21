@@ -1,10 +1,10 @@
-import React from 'react';
-import Layout from '../../components/layout';
+import React, { memo, useState } from 'react';
+import { SignInLayout } from '../../components/templates/SignInLayout';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { CodeCreation } from '../../components/templates/CodeCreation';
 import Router from 'next/router';
-import HeaderLogin from '../../components/headerLogin';
-import Field from '../../components/field';
-import { Archive, editArchive } from '../../lib/archive';
+import { Archive } from '../../types/archive';
+import { editArchive } from '../../lib/archive/editArchive';
 
 const url = process.env.NEXT_PUBLIC_URL;
 
@@ -13,33 +13,31 @@ interface Props {
   id: string;
 }
 
-const Content: NextPage<Props> = ({ data, id }) => {
-  const handleBacktoHome = (e) => {
-    e.preventDefault();
-    Router.push('/');
-  };
-
-  const handleOnLoad = () => {
-    //document.body.style.overflow = 'hidden';
-  };
-
+const Content: NextPage<Props> = memo(({ data, id }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
-    <Layout>
-      <HeaderLogin />
-      <div onLoad={handleOnLoad} className="pt-24 px-5">
+    <SignInLayout>
+      <div className="pt-24 px-5">
         {!data && (
           <>
             <div>This Archive has already been deleted.</div>
             <div className="text-blue-600 hover:cursor-pointer">
-              <p onClick={handleBacktoHome}>← Back to home</p>
+              <p
+                onClick={() => {
+                  setIsLoading(true);
+                  Router.push('/');
+                }}
+              >
+                ← Back to home
+              </p>
             </div>
           </>
         )}
-        {data && <Field id={id} data={data} submitFunction={editArchive} isCreate={false} />}
+        {data && <CodeCreation id={id} data={data} submitFunction={editArchive} isCreate={false} />}
       </div>
-    </Layout>
+    </SignInLayout>
   );
-};
+});
 
 export const getStaticPaths: GetStaticPaths = async () => ({
   paths: [],
@@ -47,9 +45,9 @@ export const getStaticPaths: GetStaticPaths = async () => ({
 });
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = params.id;
-  const res = await fetch(`${url}/archive/${id}`);
-  const data = await res.json();
+  const id: string | string[] = params.id;
+  const res: Response = await fetch(`${url}/archive/${id}`);
+  const data: Archive = await res.json();
   return {
     props: { data, id },
   };

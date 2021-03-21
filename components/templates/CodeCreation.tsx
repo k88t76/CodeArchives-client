@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, memo } from 'react';
 import Router from 'next/router';
-import Prism from '../public/js/prism.js';
-import { Archive, deleteArchive } from '../lib/archive';
-import setImageDetail from '../lib/setImageDetail';
-import Loading from '../components/loading';
-import { CodeArea } from './organisms/codeArea';
-import { LanguageSelect } from './molecules/LanguageSelect';
-import { DeleteButton } from './atoms/deleteButton';
-import { TitleInput } from './molecules/TitleInput';
+import Prism from '../../public/js/prism.js';
+import { SetImageDetail } from '../atoms/SetImageDetail';
+import { Loading } from '../atoms/Loading';
+import { CodeArea } from '../organisms/CodeArea';
+import { LanguageSelect } from '../molecules/LanguageSelect';
+import { DeleteButton } from '../atoms/DeleteButton';
+import { TitleInput } from '../molecules/TitleInput';
+import { SaveButton } from '../atoms/SaveButton';
+import { Archive } from '../../types/archive';
+import { deleteArchive } from '../../lib/archive/deleteArchive';
 
 interface Props {
   id?: string;
@@ -17,7 +18,7 @@ interface Props {
   isCreate: boolean;
 }
 
-const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
+export const CodeCreation: React.VFC<Props> = memo(({ id, data, submitFunction, isCreate }) => {
   const [archive, setArchive] = useState<Archive>({
     uuid: data && data.uuid,
     content: data && data.content,
@@ -27,13 +28,13 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     created_at: data && data.created_at,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setArchive({ ...archive, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await submitFunction(archive, id);
@@ -42,7 +43,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     }
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await deleteArchive(id);
@@ -53,7 +54,7 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
     }
   };
 
-  const handleAlert = async (e) => {
+  const handleAlert = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
@@ -66,7 +67,9 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
       <Loading isLoading={isLoading} />
       <div>
         <div className="toolbar flex z-50 -ml-5 pl-3 py-3 fixed bg-white w-screen">
-          <div className="mt-2 pl-4 mr-4 w-16 flex-shrink-0">{setImageDetail(archive.language)}</div>
+          <div className="mt-2 pl-4 mr-4 w-16 flex-shrink-0">
+            <SetImageDetail language={archive.language} />
+          </div>
           <TitleInput title={archive.title} onChange={handleChange} />
 
           <LanguageSelect language={archive.language} archive={archive} setArchive={setArchive} />
@@ -76,19 +79,11 @@ const Field: React.FC<Props> = ({ id, data, submitFunction, isCreate }) => {
           </form>
           <div className="flex-grow"></div>
 
-          <button
-            type="submit"
-            form="edit"
-            className="w-32 bg-blue-500 hover:bg-blue-600 font-semibold text-xl shadow tracking-wider text-white rounded-lg h-10 mr-8 border border-gray-500 flex-shrink-0 focus:outline-none hover:cursor-pointer"
-          >
-            Save
-          </button>
+          <SaveButton />
         </div>
 
         <CodeArea archive={archive} setArchive={setArchive} onSubmit={handleSubmit} onChange={handleChange} />
       </div>
     </>
   );
-};
-
-export default Field;
+});

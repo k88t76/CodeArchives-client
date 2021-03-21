@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import Image from 'next/image';
-import Prism from '../public/js/prism.js';
-import { Archive, fetchArchives } from '../lib/archive';
+import { Archive } from '../../types/archive';
+import { fetchArchives } from '../../lib/archive/fetchArchives';
 
 const url = process.env.NEXT_PUBLIC_URL;
 
@@ -10,7 +10,7 @@ interface Props {
   token: string;
 }
 
-const Search: React.FC<Props> = ({ setArchives, token }) => {
+export const Search: React.VFC<Props> = memo(({ setArchives, token }) => {
   const [search, setSearch] = useState<string>('');
 
   const handleChange = (e) => setSearch(e.target.value);
@@ -54,6 +54,4 @@ const Search: React.FC<Props> = ({ setArchives, token }) => {
       </form>
     </div>
   );
-};
-
-export default Search;
+});

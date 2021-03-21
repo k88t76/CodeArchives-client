@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Link from 'next/link';
-import setImage from '../lib/setImage';
-import { Archive } from '../lib/archive';
+import { SetImage } from '../atoms/SetImage';
+import { Archive } from '../../types/archive';
 
 interface Props {
   archives: Archive[];
 }
 
-const Contents: React.FC<Props> = ({ archives }) => {
-  console.log('Contents');
+export const Contents: React.VFC<Props> = memo(({ archives }) => {
   return (
     <ul className="flex flex-wrap items-center pt-4 z-40">
       {archives.map(({ uuid, content, title, language }) => (
         <li key={uuid}>
           <div className="flex font-semibold text-gray-800 w-60 ml-8 overflow-ellipsis overflow-hidden whitespace-nowrap">
-            <div className="mr-1 -mb-2">{setImage(language)}</div>
+            <div className="mr-1 -mb-2">{<SetImage language={language} />}</div>
             {title}
           </div>
           <Link href={`/archives/${uuid}`}>
@@ -30,6 +29,4 @@ const Contents: React.FC<Props> = ({ archives }) => {
       ))}
     </ul>
   );
-};
-
-export default Contents;
+});

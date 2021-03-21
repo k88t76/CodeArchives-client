@@ -1,6 +1,11 @@
 import Image from 'next/image';
+import React, { memo } from 'react';
 
-export default function setImagedetail(language: string) {
+interface Props {
+  language: string;
+}
+
+export const SetImageDetail: React.VFC<Props> = memo(({ language }) => {
   switch (language) {
     case '':
     case 'text':
@@ -9,5 +14,4 @@ export default function setImagedetail(language: string) {
     case language:
       return <Image src={`/images/languages/${language}.svg`} alt={language} width={35} height={32} />;
   }
-  return;
-}
+});

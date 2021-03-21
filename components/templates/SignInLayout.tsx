@@ -1,32 +1,43 @@
+import Head from 'next/head';
 import Link from 'next/link';
-import Router, { NextRouter, useRouter } from 'next/router';
-import React, { useState } from 'react';
-import Loading from '../components/loading';
-import Prism from '../public/js/prism.js';
+import { NextRouter, useRouter } from 'next/router';
+import React, { memo, ReactNode, useState } from 'react';
+import { Loading } from '../atoms/Loading';
 
-const HeaderLogin: React.FC = () => {
+export const siteTitle = 'CodeArchives';
+
+interface Props {
+  children: ReactNode;
+}
+
+export const SignInLayout: React.VFC<Props> = memo(({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router: NextRouter = useRouter();
 
-  const handleBacktoHome = (e) => {
+  const handleBacktoHome = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
     setIsLoading(true);
     if (router.pathname === '/') {
       setIsLoading(false);
     }
-    Router.push('/');
+    router.push('/');
   };
 
-  const handleAddCode = (e) => {
+  const handleAddCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
     if (router.pathname === '/new') {
       setIsLoading(false);
     }
-    Router.push('/new');
+    router.push('/new');
   };
   return (
     <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Code Archives</title>
+        <meta name="description" content="Code Archives is a web service to store your codes" />
+      </Head>
       <Loading isLoading={isLoading} />
       <div className="header">
         <div className="flex items-center text-white">
@@ -55,8 +66,7 @@ const HeaderLogin: React.FC = () => {
           </Link>
         </div>
       </div>
+      <main>{children}</main>
     </>
   );
-};
-
-export default HeaderLogin;
+});

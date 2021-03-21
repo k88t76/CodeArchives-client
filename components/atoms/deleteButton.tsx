@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import React, { memo, useEffect } from 'react';
-import { Archive } from '../../lib/archive';
+import React, { memo } from 'react';
 
 interface Props {
   isCreate: boolean;

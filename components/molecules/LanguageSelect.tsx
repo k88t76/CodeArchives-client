@@ -1,10 +1,10 @@
 import React, { memo, useEffect } from 'react';
-import { Archive } from '../../lib/archive';
+import { Archive } from '../../types/archive';
 
 interface Props {
   language: string;
   archive: Archive;
-  setArchive: any;
+  setArchive: React.Dispatch<React.SetStateAction<Archive>>;
 }
 
 export const LanguageSelect: React.VFC<Props> = memo(({ language, archive, setArchive }) => {

@@ -1,15 +1,15 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 const url = process.env.NEXT_PUBLIC_URL;
 
 interface Props {
   path: string;
-  handleSubmit: (e) => Promise<void>;
-  handleChange: (e) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
+export const Form: React.VFC<Props> = memo(({ path, handleSubmit, handleChange }) => {
   const handleTitle = (path: string) => {
     if (path === 'signin') {
       return 'PLEASE SIGN IN';
@@ -17,22 +17,6 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
       return 'SIGN UP';
     } else {
       return 'GUEST SIGN IN';
-    }
-  };
-
-  const handleButton = (path: string) => {
-    if (path === 'signup') {
-      return 'Sign Up';
-    } else {
-      return 'Sign In';
-    }
-  };
-
-  const handleAlt = (path: string) => {
-    if (path === 'signin') {
-      return 'Sign in as a Guest?';
-    } else {
-      return 'Sign in as your account?';
     }
   };
 
@@ -79,18 +63,18 @@ export const Form: React.FC<Props> = ({ path, handleSubmit, handleChange }) => {
         </div>
         <div className="flex items-center justify-between">
           <Link href={path === 'signin' ? '/guest-signin' : '/'}>
-            <a className="inline-block font-bold text-sm text-gray-500 ml-0.5 hover:text-blue-500">{handleAlt(path)}</a>
+            <a className="inline-block font-bold text-sm text-gray-500 ml-0.5 hover:text-blue-500">
+              {path === 'signin' ? 'Sign in as a Guest?' : 'Sign in as your account?'}
+            </a>
           </Link>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 w-40 shadow-md text-white font-bold py-2 px-4 rounded-lg"
           >
-            {handleButton(path)}
+            {path === 'signup' ? 'Sign Up' : 'Sign In'}
           </button>
         </div>
       </form>
     </div>
   );
-};
-
-export default Form;
+});

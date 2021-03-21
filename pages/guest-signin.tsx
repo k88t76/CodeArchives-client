@@ -1,39 +1,33 @@
-import Layout from '../components/layout';
+import { UnSignInLayout } from '../components/templates/UnSignInLayout';
 import { NextPage } from 'next';
-import Router from 'next/router';
-import React, { useState } from 'react';
-import HeaderUnLogin from '../components/headerUnLogin';
-import { User, fetchAuth, setCookie } from '../lib/auth';
-import Form from '../components/form';
-import Loading from '../components/loading';
+import React, { memo, useState } from 'react';
+import { Form } from '../components/organisms/Form';
+import { Loading } from '../components/atoms/Loading';
+import { useGuestSignIn } from '../hooks/useGuestSignIn';
+import { User } from '../types/user';
 
-const GuestSignin: NextPage = () => {
+const GuestSignIn: NextPage = memo(() => {
   const [user, setUser] = useState<User>({
     name: 'guest-user',
     password: 'guest',
   });
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-
-  const handleTestSignIn = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const res = await fetchAuth(user, 'guest-signin');
-    await setCookie(res);
-    Router.push('/');
-  };
+  const { guestSignIn } = useGuestSignIn();
 
   return (
-    <Layout>
-      <HeaderUnLogin />
+    <UnSignInLayout>
       <Loading isLoading={isLoading} />
       <div className="content">
-        <Form path="guest-signin" handleSubmit={handleTestSignIn} handleChange={handleChange} />
+        <Form
+          path="guest-signin"
+          handleSubmit={(e: React.FormEvent<HTMLFormElement>) => guestSignIn(user, setIsLoading, e)}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUser({ ...user, [e.target.name]: e.target.value })
+          }
+        />
       </div>
-    </Layout>
+    </UnSignInLayout>
   );
-};
+});
 
-export default GuestSignin;
+export default GuestSignIn;

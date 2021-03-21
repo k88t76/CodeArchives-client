@@ -1,56 +1,42 @@
 import { NextPage } from 'next';
-import Layout from '../components/layout';
-import HeaderUnLogin from '../components/headerUnLogin';
-import Form from '../components/form';
-import Router from 'next/router';
-import React, { useState } from 'react';
-import { User, fetchAuth, setCookie } from '../lib/auth';
-import Loading from '../components/loading';
+import { UnSignInLayout } from '../components/templates/UnSignInLayout';
+import { Form } from '../components/organisms/Form';
+import React, { memo, useState } from 'react';
+import { Loading } from '../components/atoms/Loading';
+import { useSignUp } from '../hooks/useSignUp';
+import { User } from '../types/user';
+import { ResponseState } from '../types/response';
 
-interface ResponseState {
-  type: string | string[];
-  message: string | string[];
-}
-
-const Signup: NextPage = () => {
+const SignUp: NextPage = memo(() => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
     name: '',
     password: '',
   });
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const [response, setResponse] = useState<ResponseState>({
     type: '',
     message: '',
   });
 
-  const handleChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const { signUp } = useSignUp();
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    const res = await fetchAuth(user, 'signup');
-    if (res === 'UsedName') {
-      setResponse({
-        type: 'error',
-        message: 'The username is already used',
-      });
-    } else {
-      setIsLoading(true);
-      await setCookie(res);
-      Router.push('/');
-    }
-  };
   return (
-    <Layout>
-      <HeaderUnLogin />
+    <UnSignInLayout>
       <Loading isLoading={isLoading} />
       <div className="content">
         <p className={`${response.type}`}>{response.message}</p>
-        <Form path="signup" handleSubmit={handleSignup} handleChange={handleChange} />
+        <Form
+          path="signup"
+          handleSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+            signUp(user, setIsLoading, setResponse, e);
+          }}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUser({ ...user, [e.target.name]: e.target.value })
+          }
+        />
       </div>
-    </Layout>
+    </UnSignInLayout>
   );
-};
+});
 
-export default Signup;
+export default SignUp;
